@@ -1,0 +1,26 @@
+# Data and model artifacts (large, local/Drive only)
+data/*
+!data/.gitkeep
+!data/manifests/
+!data/manifests/**
+data/manifests/_progress.jsonl
+models/*
+!models/.gitkeep
+checkpoints/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+.pytest_cache/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
