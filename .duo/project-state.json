@@ -10,7 +10,7 @@
       "id": "T-001",
       "title": "Plan 1 — Environment and Data Acquisition",
       "type": "feature",
-      "status": "Ready for Implementation",
+      "status": "Done",
       "owner": "Cursor",
       "dependencies": [],
       "acceptance_criteria": [
@@ -19,16 +19,16 @@
         "File counts verified against SLR54 documentation (157,905 utterances expected per utt_spk_text.tsv)",
         "Screenshots captured: Colab runtime type (GPU), library versions, dataset download completing"
       ],
-      "progress": "src/ modules (slr54.py, preprocessing.py, manifests.py, splits.py) copied over from original NSTT project — download/extract logic already exists and is tested. requirements.txt extended with tensorboard/ctranslate2/faster-whisper/scikit-learn.",
+      "progress": "Local .venv created (Python 3.13); requirements.txt installed with ctranslate2 relaxed to >=4.6 locally only (4.5.0 pin has no py3.13 wheel — requirements.txt itself left untouched as the Colab-verified pin). All imports smoke-tested OK (transformers 4.49.0, datasets 3.2.0, torch 2.13.0, ctranslate2 4.8.1, sklearn 1.6.1). No CUDA locally (Apple MPS) — actual fine-tuning still targets Colab T4 per roadmap. Corpus found at data/openslr54_ne/ (user-supplied, not via src/slr54.py download): utt_spk_text.tsv has 157,905 rows (matches SLR54 docs exactly); audio present for 6,542/157,905 utterances across 12 of 16 subdirs (01/03/07/08/0d empty) — confirmed intentional partial sample by user, sufficient for Plan 2's 10-20hr subset target. Removed stray empty data/raw/slr54/ dir (leftover from before real corpus location was found). Screenshots N/A (local run, not Colab).",
       "blockers": [],
       "review": { "status": "Not Reviewed", "failed_reviews": 0, "notes": [] },
-      "files": ["src/slr54.py", "src/preprocessing.py", "src/manifests.py", "src/splits.py", "requirements.txt"]
+      "files": ["src/slr54.py", "src/preprocessing.py", "src/manifests.py", "src/splits.py", "requirements.txt", "data/openslr54_ne/"]
     },
     {
       "id": "T-002",
       "title": "Plan 2 — Preprocessing and Dataset Split",
       "type": "feature",
-      "status": "Planned",
+      "status": "Ready for Implementation",
       "owner": "Cursor",
       "dependencies": ["T-001"],
       "acceptance_criteria": [
@@ -187,6 +187,7 @@
     }
   ],
   "history": [
-    { "version": 1, "updated_at": "2026-07-16T13:35:00Z", "by": "start.skill", "summary": "NSTT-Lite workspace initialized; migrated reusable src/ modules from original NSTT project; 10 tasks scaffolded 1:1 from NSTT-Lite_10_Plan_Roadmap.md Plans 1-10; T-001 marked Ready for Implementation since most of its groundwork (download/extract code, dependency pins) already exists." }
+    { "version": 1, "updated_at": "2026-07-16T13:35:00Z", "by": "start.skill", "summary": "NSTT-Lite workspace initialized; migrated reusable src/ modules from original NSTT project; 10 tasks scaffolded 1:1 from NSTT-Lite_10_Plan_Roadmap.md Plans 1-10; T-001 marked Ready for Implementation since most of its groundwork (download/extract code, dependency pins) already exists." },
+    { "version": 2, "updated_at": "2026-07-16T14:20:00Z", "by": "claude", "summary": "T-001 completed: local .venv environment verified (all deps import cleanly), user-supplied SLR54 corpus found at data/openslr54_ne/ (157,905-row TSV verified against docs, 6,542/157,905 utterances have audio — confirmed intentional partial sample). T-002 promoted to Ready for Implementation." }
   ]
 }
