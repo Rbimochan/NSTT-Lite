@@ -1,6 +1,8 @@
 """Step 13: convert the fine-tuned checkpoint to CTranslate2 and benchmark latency."""
 from __future__ import annotations
 
+import os
+
 import subprocess
 import sys
 import time
@@ -11,8 +13,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from faster_whisper import WhisperModel
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-CHECKPOINT_DIR = PROJECT_ROOT / "models" / "finetuned"
-CT2_DIR = PROJECT_ROOT / "models" / "finetuned_ct2"
+CHECKPOINT_DIR = Path(os.environ.get("NSTT_CHECKPOINT_DIR", PROJECT_ROOT / "models" / "finetuned"))
+CT2_DIR = Path(os.environ.get("NSTT_CT2_DIR", PROJECT_ROOT / "models" / "finetuned_ct2"))
 SAMPLE_WAVS = [
     "/tmp/own_voice_wav/Timro naam k ho.wav",
     "/tmp/own_voice_wav/Maile kaam paina.wav",

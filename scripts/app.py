@@ -2,6 +2,8 @@
 WER/CER summary + inference latency, on the fine-tuned CTranslate2 model."""
 from __future__ import annotations
 
+import os
+
 import json
 import sys
 import time
@@ -20,7 +22,7 @@ from transformers import WhisperProcessor
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 CT2_DIR = PROJECT_ROOT / "models" / "finetuned_ct2"
-HF_CHECKPOINT_DIR = PROJECT_ROOT / "models" / "finetuned"
+HF_CHECKPOINT_DIR = Path(os.environ.get("NSTT_CHECKPOINT_DIR", PROJECT_ROOT / "models" / "finetuned"))
 REPORTS_DIR = PROJECT_ROOT / "reports"
 
 

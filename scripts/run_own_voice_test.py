@@ -1,6 +1,8 @@
 """Step 11: transcribe real self-recorded Nepali clips with the fine-tuned checkpoint."""
 from __future__ import annotations
 
+import os
+
 import json
 import sys
 from pathlib import Path
@@ -15,7 +17,7 @@ from src.evaluation import compute_wer_cer
 from src.training import LANGUAGE, TASK
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-CHECKPOINT_DIR = PROJECT_ROOT / "models" / "finetuned"
+CHECKPOINT_DIR = Path(os.environ.get("NSTT_CHECKPOINT_DIR", PROJECT_ROOT / "models" / "finetuned"))
 WAV_DIR = Path("/tmp/own_voice_wav")
 TXT_DIR = PROJECT_ROOT / "data" / "iphone_recordings"
 

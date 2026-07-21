@@ -1,6 +1,8 @@
 """Step 12: categorize ASR errors on the fine-tuned checkpoint's real test predictions."""
 from __future__ import annotations
 
+import os
+
 import sys
 from pathlib import Path
 
@@ -9,7 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from src.error_analysis import run_error_analysis
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-CHECKPOINT_DIR = PROJECT_ROOT / "models" / "finetuned"
+CHECKPOINT_DIR = Path(os.environ.get("NSTT_CHECKPOINT_DIR", PROJECT_ROOT / "models" / "finetuned"))
 MAX_SAMPLES = 150  # matches the Step 9 eval subset
 
 

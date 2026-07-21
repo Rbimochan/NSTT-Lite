@@ -10,6 +10,8 @@ reflects agreement with the F0 heuristic, not necessarily true gender.
 """
 from __future__ import annotations
 
+import os
+
 import json
 import sys
 from pathlib import Path
@@ -32,7 +34,7 @@ from transformers import WhisperModel, WhisperProcessor
 from src.manifests import read_jsonl_manifest
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-CHECKPOINT_DIR = PROJECT_ROOT / "models" / "finetuned"
+CHECKPOINT_DIR = Path(os.environ.get("NSTT_CHECKPOINT_DIR", PROJECT_ROOT / "models" / "finetuned"))
 REPORTS_DIR = PROJECT_ROOT / "reports"
 LABELS = ["male", "female"]
 
