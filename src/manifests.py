@@ -14,6 +14,7 @@ MANIFEST_FIELDS = [
     "audio_path",
     "transcript",
     "speaker_id",
+    "gender",
     "duration_s",
     "split",
 ]

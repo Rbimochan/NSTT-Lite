@@ -62,10 +62,17 @@ def manifest_to_dataset(rows: list[dict], project_root: Path) -> Dataset:
 def load_manifest_datasets(
     project_root: Path,
     manifest_dir: Path | None = None,
+    *,
+    max_train: int | None = None,
+    max_eval: int | None = None,
 ) -> tuple[Dataset, Dataset]:
     manifest_dir = manifest_dir or (project_root / "data" / "manifests")
     train_rows = read_jsonl_manifest(manifest_dir / "train.jsonl")
     val_rows = read_jsonl_manifest(manifest_dir / "val.jsonl")
+    if max_train is not None:
+        train_rows = train_rows[:max_train]
+    if max_eval is not None:
+        val_rows = val_rows[:max_eval]
     return (
         manifest_to_dataset(train_rows, project_root),
         manifest_to_dataset(val_rows, project_root),
@@ -153,7 +160,8 @@ def build_training_arguments(
             predict_with_generate=True,
             generation_max_length=128,
             fp16=fp16 and torch.cuda.is_available(),
-            report_to=[],
+            report_to=["tensorboard"],
+            logging_dir=str(output_dir / "runs"),
             remove_unused_columns=False,
             label_names=["labels"],
             load_best_model_at_end=False,
@@ -176,6 +184,7 @@ def build_training_arguments(
         generation_max_length=225,
         fp16=fp16 and torch.cuda.is_available(),
         report_to=["tensorboard"],
+        logging_dir=str(output_dir / "runs"),
         remove_unused_columns=False,
         label_names=["labels"],
         load_best_model_at_end=False,
@@ -189,10 +198,14 @@ def create_trainer(
     smoke_test: bool = False,
     seed: int = DEFAULT_SEED,
     manifest_dir: Path | None = None,
+    max_train: int | None = None,
+    max_eval: int | None = None,
 ) -> tuple[Seq2SeqTrainer, WhisperProcessor]:
     set_seed(seed)
     model, processor = load_whisper_model_and_processor()
-    train_ds, eval_ds = load_manifest_datasets(project_root, manifest_dir=manifest_dir)
+    train_ds, eval_ds = load_manifest_datasets(
+        project_root, manifest_dir=manifest_dir, max_train=max_train, max_eval=max_eval
+    )
 
     prepare_fn = build_prepare_fn(processor)
     train_ds = train_ds.map(prepare_fn, remove_columns=train_ds.column_names)
@@ -224,6 +237,9 @@ def train_and_save(
     smoke_test: bool = False,
     resume_from_checkpoint: str | bool | None = None,
     seed: int = DEFAULT_SEED,
+    manifest_dir: Path | None = None,
+    max_train: int | None = None,
+    max_eval: int | None = None,
 ) -> dict:
     """Run training and return metrics + checkpoint path."""
     trainer, processor = create_trainer(
@@ -231,6 +247,9 @@ def train_and_save(
         output_dir,
         smoke_test=smoke_test,
         seed=seed,
+        manifest_dir=manifest_dir,
+        max_train=max_train,
+        max_eval=max_eval,
     )
     train_result = trainer.train(resume_from_checkpoint=resume_from_checkpoint)
     eval_metrics = trainer.evaluate()
