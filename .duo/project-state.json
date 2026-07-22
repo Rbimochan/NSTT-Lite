@@ -1,7 +1,7 @@
 {
-  "version": 1,
-  "updated_at": "2026-07-16T13:35:00Z",
-  "updated_by": "start.skill",
+  "version": 4,
+  "updated_at": "2026-07-21T09:15:00Z",
+  "updated_by": "claude",
   "project": { "name": "NSTT-Lite — Nepali Speech-to-Text (rescoped)", "mode": "brownfield" },
   "current_sprint": "Sprint 1",
   "architecture_status": "Approved",
@@ -10,7 +10,7 @@
       "id": "T-001",
       "title": "Plan 1 — Environment and Data Acquisition",
       "type": "feature",
-      "status": "Ready for Implementation",
+      "status": "Done",
       "owner": "Cursor",
       "dependencies": [],
       "acceptance_criteria": [
@@ -19,17 +19,17 @@
         "File counts verified against SLR54 documentation (157,905 utterances expected per utt_spk_text.tsv)",
         "Screenshots captured: Colab runtime type (GPU), library versions, dataset download completing"
       ],
-      "progress": "src/ modules (slr54.py, preprocessing.py, manifests.py, splits.py) copied over from original NSTT project — download/extract logic already exists and is tested. requirements.txt extended with tensorboard/ctranslate2/faster-whisper/scikit-learn.",
+      "progress": "Local .venv created (Python 3.13); requirements.txt installed with ctranslate2 relaxed to >=4.6 locally only (4.5.0 pin has no py3.13 wheel — requirements.txt itself left untouched as the Colab-verified pin). All imports smoke-tested OK (transformers 4.49.0, datasets 3.2.0, torch 2.13.0, ctranslate2 4.8.1, sklearn 1.6.1). No CUDA locally (Apple MPS) — actual fine-tuning still targets Colab T4 per roadmap. Corpus found at data/openslr54_ne/ (user-supplied, not via src/slr54.py download): utt_spk_text.tsv has 157,905 rows (matches SLR54 docs exactly); audio present for 6,542/157,905 utterances across 12 of 16 subdirs (01/03/07/08/0d empty) — confirmed intentional partial sample by user, sufficient for Plan 2's 10-20hr subset target. Removed stray empty data/raw/slr54/ dir (leftover from before real corpus location was found). Screenshots N/A (local run, not Colab).",
       "blockers": [],
       "review": { "status": "Not Reviewed", "failed_reviews": 0, "notes": [] },
-      "files": ["src/slr54.py", "src/preprocessing.py", "src/manifests.py", "src/splits.py", "requirements.txt"]
+      "files": ["src/slr54.py", "src/preprocessing.py", "src/manifests.py", "src/splits.py", "requirements.txt", "data/openslr54_ne/"]
     },
     {
       "id": "T-002",
       "title": "Plan 2 — Preprocessing and Dataset Split",
       "type": "feature",
-      "status": "Planned",
-      "owner": "Cursor",
+      "status": "Done",
+      "owner": "Claude",
       "dependencies": ["T-001"],
       "acceptance_criteria": [
         "Audio resampled to 16kHz mono; invalid/corrupt clips dropped (reuse src/preprocessing.py duration/format filtering)",
@@ -38,62 +38,64 @@
         "Speaker-disjoint 10-20 hour subset built (smaller than original NSTT's full ~165hr corpus) and split 80/10/10 train/val/test with zero speaker overlap confirmed (reuse src/splits.py speaker_disjoint_split + count_speaker_overlap)",
         "Finalized, versioned manifest (CSV/JSON) mapping audio → transcript → speaker → gender → split"
       ],
-      "progress": null,
+      "progress": "Corpus grown to 55,980 files (96 subdirs) via additional SLR54 shard downloads. gender field added to MANIFEST_FIELDS; populated via an F0-pitch acoustic heuristic (librosa pyin, 165Hz threshold) since SLR54 ships NO gender metadata at all (verified against openslr.org/54 listing) — this is a pseudo-label, not ground truth, documented everywhere it appears. Real manifests regenerated: 15,459 utterances / 146 speakers / 15.03hrs, speaker-disjoint 80/10/10, 0 speaker overlap confirmed via count_speaker_overlap(). Done directly by Claude rather than via the Cursor handoff cycle (interactive session, not a batch implementation task).",
       "blockers": [],
-      "review": { "status": null, "failed_reviews": 0, "notes": [] },
-      "files": []
+      "review": { "status": "Not Reviewed", "failed_reviews": 0, "notes": [] },
+      "files": ["src/manifests.py", "src/preprocessing.py", "src/pipeline.py", "src/splits.py", "data/manifests/"]
     },
     {
       "id": "T-003",
       "title": "Plan 3 — Baseline Evaluation (Zero-Shot)",
       "type": "feature",
-      "status": "Planned",
-      "owner": "Cursor",
+      "status": "Done",
+      "owner": "Claude",
       "dependencies": ["T-002"],
       "acceptance_criteria": [
         "Pretrained Whisper-Small run zero-shot (no fine-tuning) on the Nepali test set; WER/CER computed and logged",
         "Trivial gender-classification baseline built (majority-class or simple acoustic-feature classifier) for comparison",
         "Every run screenshotted with visible device info"
       ],
-      "progress": null,
+      "progress": "Zero-shot whisper-small on 150 real test utterances: WER=221.76%, CER=147.39% (reports/wer_cer_results.md). Majority-class gender baseline (predict F0-pseudo-label majority for every utterance): 75.16% (reports/baseline_gender.json). No screenshots -- ran locally (CPU/MPS), not Colab; device info logged in text instead. Done directly by Claude.",
       "blockers": [],
-      "review": { "status": null, "failed_reviews": 0, "notes": [] },
-      "files": []
+      "review": { "status": "Not Reviewed", "failed_reviews": 0, "notes": [] },
+      "files": ["scripts/run_baseline.py", "reports/wer_cer_results.md", "reports/baseline_gender.json", "reports/baseline_asr_examples.jsonl"]
     },
     {
       "id": "T-004",
       "title": "Plan 4 — ASR Fine-Tuning Setup",
       "type": "feature",
-      "status": "Planned",
-      "owner": "Cursor",
+      "status": "Done",
+      "owner": "Claude",
       "dependencies": ["T-003"],
       "acceptance_criteria": [
         "Seq2SeqTrainer script written: AdamW, FP16, batch size 2, gradient accumulation 4, max 5 epochs, early stopping (patience 2 on validation WER) — reuse/extend src/training.py from original NSTT where applicable",
         "TensorBoard logging and checkpoint saving to Drive wired up (NEW vs. original NSTT, which didn't use TensorBoard)",
         "Short smoke-test run (a few dozen steps) confirms the loop works end-to-end without crashing"
       ],
-      "progress": null,
+      "progress": "src/training.py extended with max_train/max_eval slicing (needed so eval doesn't run generation over the full val set every eval_steps -- a real bottleneck hit during the smoke test). Smoke test (6 steps, 32 train/8 eval rows) ran end-to-end without crashing; models/smoke_test/checkpoint-6 exists. TensorBoard confirmed actually logging (not just configured) -- verified train/loss scalars readable via EventAccumulator, steps 1-6, values 1.70->0.83. This satisfied the loop-correctness bar; T-005 covers the REAL full-scale run, which still needs to happen on Colab T4 (300 local CPU/MPS steps in T-005's current progress were a proof-of-loop run, not the intended budget).",
       "blockers": [],
-      "review": { "status": null, "failed_reviews": 0, "notes": [] },
-      "files": []
+      "review": { "status": "Not Reviewed", "failed_reviews": 0, "notes": [] },
+      "files": ["src/training.py", "scripts/run_smoke_test.py", "models/smoke_test/"]
     },
     {
       "id": "T-005",
-      "title": "Plan 5 — ASR Fine-Tuning Execution",
+      "title": "Plan 5 — ASR Fine-Tuning Execution (full-scale, Colab T4)",
       "type": "feature",
-      "status": "Planned",
+      "status": "Ready for Implementation",
       "owner": "Cursor",
       "dependencies": ["T-004"],
       "acceptance_criteria": [
-        "Full fine-tuning run to early-stopping criterion or 5-epoch ceiling, resumable across Colab sessions via checkpoints",
-        "TensorBoard curves (train/val loss, WER over epochs) monitored and screenshotted",
-        "Best checkpoint selected by validation WER"
+        "Run notebooks/plan4_colab.ipynb Steps 0-1 (or scripts/run_colab_training.py directly) on an actual Colab T4 GPU runtime -- NOT local CPU/MPS. Confirm torch.cuda.is_available() prints True before training starts.",
+        "Full fine-tuning run to early-stopping criterion (patience 2 on val WER) or the 5-epoch/2000-step ceiling, whichever comes first -- this uses the real full train/val splits (max_train=None, max_eval=None), not the 300-step/reduced-eval local run already in models/finetuned",
+        "TensorBoard curves (train/loss, eval/wer) screenshotted showing a real multi-step curve, plus a screenshot of the GPU runtime type and library versions (Colab: Runtime -> Change runtime type -> T4 GPU, then the printed torch.cuda.get_device_name(0) output)",
+        "Best checkpoint saved to models/finetuned_full/, selected by validation WER (load_best_model_at_end=True, metric_for_best_model='wer')",
+        "Report the final global_step reached (needed by T-005b's matched-step ablation) and eval_wer/eval_loss at that step"
       ],
       "progress": null,
       "blockers": [],
       "review": { "status": null, "failed_reviews": 0, "notes": [] },
-      "files": [],
-      "human_prerequisite": "This is the main GPU wall-clock step (multi-hour). Buffer extra time; resumable checkpointing is required given Colab session/quota limits observed on the original NSTT project."
+      "files": ["scripts/run_colab_training.py", "notebooks/plan4_colab.ipynb"],
+      "human_prerequisite": "This is the main GPU wall-clock step (multi-hour). Requires an actual Colab T4 GPU session -- cannot run on local CPU/MPS and cannot be executed by Claude directly (no GPU access from this environment). Buffer extra time; resumable checkpointing via trainer.train(resume_from_checkpoint=...) is required if the Colab session disconnects mid-run."
     },
     {
       "id": "T-006",
@@ -184,9 +186,32 @@
       "review": { "status": null, "failed_reviews": 0, "notes": [] },
       "files": [],
       "human_prerequisite": "Writing itself is a human task, not a Cursor implementation task — Duo's role here is compiling/organizing inputs, not drafting the report prose."
+    },
+    {
+      "id": "T-011",
+      "title": "XLS-R Bias Audit — comparison baseline (out of the T-001…T-010 Whisper-Small scope)",
+      "type": "feature",
+      "status": "Done",
+      "owner": "Claude",
+      "dependencies": [],
+      "acceptance_criteria": [
+        "gagan3012/wav2vec2-xlsr-nepali evaluated in-domain on OpenSLR-43 (its own training/self-eval corpus) to sanity-check the published 5.97% WER",
+        "Same model evaluated on a SEPARATE, multi-speaker corpus (this repo's existing OpenSLR-54 test manifest) as an out-of-domain diversity check — OpenSLR-43 and OpenSLR-54 results never merged into one 'OpenSLR' number",
+        "Demographic WER breakdown on the OpenSLR-54 side uses NSTT-Lite's existing F0-pseudo-label gender field, explicitly caveated as not ground truth in every place it appears",
+        "Manifest for the OpenSLR-43 slice tracked in data/manifests/ (references HF dataset index, not raw audio, which stays gitignored)",
+        "Results written to reports/xlsr_baseline_results.json, structurally similar to reports/gender_classifier_results.json",
+        "This is a one-time comparison baseline (per project owner's explicit decision), NOT a second fine-tuning/deployment track — existing T-001…T-010 Whisper-Small scope is untouched"
+      ],
+      "progress": "src/xlsr_baseline.py + scripts/run_xlsr_baseline.py migrated from a standalone Colab notebook (Cells 1-4: dataset load, model load, preprocessing). Results (150 utterances each): OpenSLR-43 in-domain WER=4.91%/CER=0.87% (vs. self-reported 5.97%, on a slice of the same corpus, not an independent test set). OpenSLR-54 diversity check WER=65.28%/CER=21.88% (108 pseudo-labeled-male / 42 pseudo-labeled-female utterances after fixing a sampling bug -- test.jsonl is speaker-ordered, so a naive [:150] slice was accidentally 100% male; fixed via seed=42 shuffle). Gender breakdown: male WER=70.16%, female WER=52.14% (F0-pseudo-label, not ground truth). Confirms the audit's original suspicion: the self-reported WER does not generalize to a different, more diverse Nepali speech corpus -- a >13x WER increase out-of-domain. This finding is about corpus generalization, not necessarily about the model being bad in an absolute sense.",
+      "blockers": [],
+      "review": { "status": "Not Reviewed", "failed_reviews": 0, "notes": [] },
+      "files": ["src/xlsr_baseline.py", "scripts/run_xlsr_baseline.py", "data/manifests/xlsr_openslr43_test_manifest.csv", "reports/xlsr_baseline_results.json"]
     }
   ],
   "history": [
-    { "version": 1, "updated_at": "2026-07-16T13:35:00Z", "by": "start.skill", "summary": "NSTT-Lite workspace initialized; migrated reusable src/ modules from original NSTT project; 10 tasks scaffolded 1:1 from NSTT-Lite_10_Plan_Roadmap.md Plans 1-10; T-001 marked Ready for Implementation since most of its groundwork (download/extract code, dependency pins) already exists." }
+    { "version": 1, "updated_at": "2026-07-16T13:35:00Z", "by": "start.skill", "summary": "NSTT-Lite workspace initialized; migrated reusable src/ modules from original NSTT project; 10 tasks scaffolded 1:1 from NSTT-Lite_10_Plan_Roadmap.md Plans 1-10; T-001 marked Ready for Implementation since most of its groundwork (download/extract code, dependency pins) already exists." },
+    { "version": 2, "updated_at": "2026-07-16T14:20:00Z", "by": "claude", "summary": "T-001 completed: local .venv environment verified (all deps import cleanly), user-supplied SLR54 corpus found at data/openslr54_ne/ (157,905-row TSV verified against docs, 6,542/157,905 utterances have audio — confirmed intentional partial sample). T-002 promoted to Ready for Implementation." },
+    { "version": 3, "updated_at": "2026-07-21T09:00:00Z", "by": "claude", "summary": "T-002, T-003, T-004 completed (real preprocessing/gender-pseudo-labels, zero-shot+majority baselines, smoke test + TensorBoard verified) -- all done directly by Claude in an interactive session (PRs #1, #2) rather than via a batch Cursor handoff, since the work was exploratory/iterative. T-005 rewritten and set to Ready for Implementation, targeting Cursor: run notebooks/plan4_colab.ipynb / scripts/run_colab_training.py on an actual Colab T4 GPU session for the real full-scale (5-epoch/2000-step) training run -- the 300-step checkpoint at models/finetuned was a local CPU/MPS proof-of-loop run, not the intended training budget, and cannot substitute for T-005." },
+    { "version": 4, "updated_at": "2026-07-21T09:15:00Z", "by": "claude", "summary": "Added T-011 (XLS-R Bias Audit) -- a one-time comparison baseline migrated from a standalone Colab notebook, per project owner's explicit decision that this stays a comparison and does not become a second fine-tuning/deployment track. Confirms the audited model's self-reported 5.97% WER (measured 4.91% in-domain on OpenSLR-43) does not generalize to a different, more diverse corpus (65.28% WER on OpenSLR-54's test manifest) -- results and file naming kept fully separate between the two OpenSLR corpora throughout, per the migration plan's explicit instruction not to merge them." }
   ]
 }
