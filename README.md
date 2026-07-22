@@ -16,6 +16,14 @@ scale** to stay tractable without a GPU.
 **Plan 4 is in progress**: closing that scale gap with a real Colab T4 GPU run.
 This is the current bottleneck — see [Plan 4](#plan-4--closing-the-scale-gap-in-progress) below.
 
+**Separately, T-011 (XLS-R comparison baseline) is done.** As a one-time sanity
+check — not a second fine-tuning track — `gagan3012/wav2vec2-xlsr-nepali`'s
+published 5.97% WER was audited: **4.91% WER on OpenSLR-43** (its own in-domain
+training/self-eval corpus, single female speaker) vs. **65.28% WER on
+OpenSLR-54** (this repo's existing, multi-speaker test manifest — a completely
+separate corpus, never merged with OpenSLR-43 numbers). See
+[reports/xlsr_baseline_results.json](reports/xlsr_baseline_results.json).
+
 | | Local (done) | Full-scale (Plan 4, pending) |
 |---|---|---|
 | Training steps | 300 (~16% of 1 epoch) | 2000 / 5 epochs, early-stopped |

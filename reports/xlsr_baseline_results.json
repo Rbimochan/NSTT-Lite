@@ -1,0 +1,40 @@
+{
+  "model": "gagan3012/wav2vec2-xlsr-nepali",
+  "model_family": "XLS-R / wav2vec2 (CTC) -- NOT the same architecture as this repo's Whisper-Small track",
+  "purpose": "One-time comparison baseline to sanity-check the model's self-reported 5.97% WER and inform the backbone choice already made in Plans 1-4. Not a second fine-tuning/deployment track.",
+  "openslr43_in_domain": {
+    "dataset": "OpenSLR-43 (gauravparajuli/slr43)",
+    "role": "in-domain (model's own training/self-eval corpus)",
+    "num_utterances": 150,
+    "wer": 0.04913494809688582,
+    "cer": 0.008724212254952273,
+    "demographic_breakdown": null,
+    "demographic_note": "OpenSLR-43 has no speaker/gender metadata and is a single-speaker (female) corpus -- no within-corpus demographic breakdown is possible.",
+    "published_wer_comparison": {
+      "self_reported_wer": 0.0597,
+      "measured_wer": 0.04913494809688582,
+      "note": "measured on a 150-utterance slice of the same corpus, not an independent test set"
+    }
+  },
+  "openslr54_diversity_check": {
+    "dataset": "OpenSLR-54 (this repo's existing Whisper-Small corpus)",
+    "role": "out-of-domain diversity check -- DIFFERENT corpus from OpenSLR-43, not directly comparable",
+    "num_utterances": 150,
+    "wer": 0.6527777777777778,
+    "cer": 0.21883239171374766,
+    "demographic_breakdown": {
+      "male": {
+        "num_utterances": 108,
+        "wer": 0.7015873015873015,
+        "cer": 0.23175089331291476
+      },
+      "female": {
+        "num_utterances": 42,
+        "wer": 0.5213675213675214,
+        "cer": 0.1824712643678161
+      }
+    },
+    "demographic_note": "Breakdown uses NSTT-Lite's `gender` field, an F0-pitch acoustic pseudo-label (165Hz threshold), NOT verified/ground-truth gender. Results measure agreement with that heuristic, not true gender."
+  },
+  "corpus_separation_note": "OpenSLR-43 and OpenSLR-54 are DIFFERENT corpora and are never merged into a single 'OpenSLR' number anywhere in this report."
+}
