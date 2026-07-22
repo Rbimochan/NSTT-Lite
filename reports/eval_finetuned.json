@@ -1,6 +1,0 @@
-{
-  "wer": 0.7013888888888888,
-  "cer": 0.21975582685904552,
-  "num_utterances": 150,
-  "note": "Fine-tuned (speaker-disjoint split, 300 steps)"
-}
