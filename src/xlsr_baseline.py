@@ -94,9 +94,10 @@ def build_openslr43_manifest_rows(dataset: Dataset) -> list[dict]:
     return rows
 
 
-def write_openslr43_manifest(rows: list[dict], path: Path) -> None:
+def write_openslr43_manifest(rows: list[dict], path: Path | str) -> None:
     import csv
 
+    path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=["utterance_id", "hf_dataset", "hf_index", "text", "duration_s"])
