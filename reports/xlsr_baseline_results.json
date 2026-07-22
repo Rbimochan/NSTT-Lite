@@ -1,0 +1,9 @@
+{
+  "model": "gagan3012/wav2vec2-xlsr-nepali",
+  "dataset": "OpenSLR-43 (gauravparajuli/slr43)",
+  "num_utterances": 150,
+  "wer": 0.04913494809688582,
+  "cer": 0.008724212254952273,
+  "self_reported_wer": 0.0597,
+  "note": "Measured on a fixed-seed slice of the corpus (no independent held-out test split exists upstream). Single-speaker (female) corpus, no gender/demographic metadata -- no breakdown possible or attempted."
+}

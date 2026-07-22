@@ -1,25 +1,8 @@
-# NSTT-Lite pinned dependencies (Plan 1)
-# Colab runtimes ship CUDA-enabled torch/torchvision/torchaudio as a matched
-# trio — do not pin any of the three here, or pip will break that pairing
-# (e.g. "operator torchvision::nms does not exist").
-#
-# transformers/huggingface_hub are pinned to an exact known-good pairing.
-# Colab's default huggingface_hub (0.36.2 as of mid-2026) dropped the
-# `is_offline_mode` export that transformers 4.49 imports at load time —
-# pin both exactly rather than using >= ranges, which let pip leave the
-# broken huggingface_hub version in place.
+# XLS-R (wav2vec2) Nepali baseline audit -- pinned dependencies
+# Do not pin torch/torchaudio here if running on Colab -- Colab ships a
+# matched torch/torchvision/torchaudio trio; pinning breaks it.
 transformers==4.49.0
 huggingface_hub==0.27.1
 datasets==3.2.0
-accelerate==1.2.1
-evaluate==0.4.3
 jiwer==3.0.5
-librosa==0.10.2.post1
 soundfile==0.12.1
-matplotlib==3.10.0
-streamlit==1.41.1
-pandas==2.2.3
-tensorboard==2.18.0
-ctranslate2==4.5.0
-faster-whisper==1.1.1
-scikit-learn==1.6.1
