@@ -40,13 +40,23 @@ Two corpora, **never merged**, per the report's own `corpus_separation_note`:
 | Corpus | Utterances | WER | Gender breakdown |
 |---|---|---|---|
 | `openslr43_in_domain` (OpenSLR-43, `gauravparajuli/slr43`) | 150 | **4.91%** | None — single-speaker female corpus, no metadata. Confirms our own run beats the published 5.97% on the same narrow distribution; no dataset swap or cherry-picking found. |
-| `openslr54_diversity_check` (OpenSLR-54, existing NSTT-Lite test manifest) | 150 (108 male / 42 female, shuffled seed=42 — not the full 1,675-row test split) | **65.28%** | 70.16% (pseudo-labeled "male") / 52.14% (pseudo-labeled "female") — F0-pitch heuristic, **not verified ground truth** (same method NSTT-Lite's own gender classifier already found unreliable, 44.8% acc.) |
+| `openslr54_diversity_check` (OpenSLR-54, existing NSTT-Lite test manifest) | **150** (subsample — NOT the full 1,675-row test split) | **65.28%** | 70.16% (pseudo-labeled "male") / 52.14% (pseudo-labeled "female") — F0-pitch heuristic, **not verified ground truth** (same method NSTT-Lite's own gender classifier already found unreliable, 44.8% acc.) |
+
+**Correction (post-save):** the OpenSLR-54 side was originally miswritten as
+"full test set" — corrected to match `reports/xlsr_baseline_results.json`
+exactly, which used a 150-utterance subsample, not the full 1,675-row split.
+
+**Sample-size caveat:** at ~108/42 male/female (pseudo-label) within that
+150-utterance subsample, the "female" bucket is only ~42 utterances. The
+70.16%/52.14% gap is suggestive, not statistically solid, and could shift once
+run on the full test split.
 
 **The headline finding:** the model's real-world generalization gap is large
-(4.91% → 65.28% WER moving from narrow to diverse speech). The apparent
-male/female WER gap inside OpenSLR-54 is suggestive but should be described as
-"WER by pitch-threshold group," not "WER by gender," until backed by
-self-reported demographic labels.
+(4.91% → 65.28% WER moving from narrow to diverse speech, subsample-based).
+The apparent male/female WER gap inside OpenSLR-54 is suggestive but should be
+described as "WER by pitch-threshold group," not "WER by gender," until backed
+by self-reported demographic labels — and re-checked on the full 1,675-row set
+before being treated as a finding rather than a lead.
 
 ## Open items carried forward
 
@@ -55,5 +65,8 @@ self-reported demographic labels.
 - If male/female WER gap is worth investigating further, it needs a dataset
   with *real* self-reported gender metadata (e.g. Common Voice contributor
   fields) before drawing conclusions — not the F0 pseudo-label.
+- The 65.28% WER / gender-gap numbers are from a 150-utterance subsample of
+  OpenSLR-54, not the full 1,675-row test split — re-run on the full split
+  before treating either number as final.
 - `plan4-continuation` branch exists but is empty; no action needed until the
   Colab run produces results to build on.
