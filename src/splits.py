@@ -62,6 +62,45 @@ def speaker_disjoint_split(
     return splits
 
 
+def utterance_random_split(
+    records: list[dict],
+    *,
+    seed: int = DEFAULT_SEED,
+    train_ratio: float = TRAIN_RATIO,
+    val_ratio: float = VAL_RATIO,
+    test_ratio: float = TEST_RATIO,
+) -> dict[SplitName, list[dict]]:
+    """"Leaky" split: shuffle utterances directly, ignoring speaker identity.
+
+    Same size/ratios as speaker_disjoint_split, but a speaker's utterances can
+    land in multiple splits. Used only as a Phase 9 ablation to measure how
+    much speaker leakage inflates apparent performance on this dataset.
+    """
+    if abs(train_ratio + val_ratio + test_ratio - 1.0) > 1e-6:
+        raise ValueError("train/val/test ratios must sum to 1.0")
+
+    shuffled = list(records)
+    random.Random(seed).shuffle(shuffled)
+
+    n = len(shuffled)
+    n_train = int(n * train_ratio)
+    n_val = int(n * val_ratio)
+
+    splits: dict[SplitName, list[dict]] = {"train": [], "val": [], "test": []}
+    for i, record in enumerate(shuffled):
+        row = dict(record)
+        if i < n_train:
+            row["split"] = "train"
+            splits["train"].append(row)
+        elif i < n_train + n_val:
+            row["split"] = "val"
+            splits["val"].append(row)
+        else:
+            row["split"] = "test"
+            splits["test"].append(row)
+    return splits
+
+
 def count_speaker_overlap(splits: dict[SplitName, list[dict]]) -> int:
     """Return number of speakers appearing in more than one split (expect 0)."""
     speaker_to_splits: dict[str, set[str]] = defaultdict(set)
