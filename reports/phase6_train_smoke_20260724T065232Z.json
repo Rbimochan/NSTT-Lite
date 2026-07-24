@@ -1,0 +1,23 @@
+{
+  "created_at": "20260724T065232Z",
+  "device": {
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+    "python": "3.13.13",
+    "torch": "2.13.0",
+    "cuda_available": false,
+    "cuda_device": null,
+    "mps_available": true
+  },
+  "train_loss": 1.9764537711938222,
+  "eval_metrics": {
+    "eval_loss": 1.0585989952087402,
+    "eval_wer": 0.92,
+    "eval_runtime": 12.3599,
+    "eval_samples_per_second": 0.647,
+    "eval_steps_per_second": 0.324,
+    "epoch": 1.5
+  },
+  "checkpoint_dir": "/Users/bimochankunwar/Desktop/NSTT-Lite/models/whisper-small-ft-smoke",
+  "smoke_test": true,
+  "global_step": 6
+}

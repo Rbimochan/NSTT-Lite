@@ -16,6 +16,7 @@ import numpy as np
 import torch
 from datasets import Audio, Dataset
 from transformers import (
+    EarlyStoppingCallback,
     Seq2SeqTrainer,
     Seq2SeqTrainingArguments,
     WhisperForConditionalGeneration,
@@ -30,6 +31,11 @@ DEFAULT_SEED = 42
 TARGET_SAMPLE_RATE = 16_000
 LANGUAGE = "nepali"
 TASK = "transcribe"
+# Phase 6 / roadmap: patience 2 on validation WER; 5-epoch ceiling.
+EARLY_STOPPING_PATIENCE = 2
+NUM_TRAIN_EPOCHS = 5
+SMOKE_TRAIN_SAMPLES = 32
+SMOKE_VAL_SAMPLES = 8
 
 
 def load_whisper_model_and_processor(
@@ -62,10 +68,17 @@ def manifest_to_dataset(rows: list[dict], project_root: Path) -> Dataset:
 def load_manifest_datasets(
     project_root: Path,
     manifest_dir: Path | None = None,
+    *,
+    max_train_samples: int | None = None,
+    max_val_samples: int | None = None,
 ) -> tuple[Dataset, Dataset]:
     manifest_dir = manifest_dir or (project_root / "data" / "manifests")
     train_rows = read_jsonl_manifest(manifest_dir / "train.jsonl")
     val_rows = read_jsonl_manifest(manifest_dir / "val.jsonl")
+    if max_train_samples is not None:
+        train_rows = train_rows[:max_train_samples]
+    if max_val_samples is not None:
+        val_rows = val_rows[:max_val_samples]
     return (
         manifest_to_dataset(train_rows, project_root),
         manifest_to_dataset(val_rows, project_root),
@@ -135,10 +148,18 @@ def build_training_arguments(
     smoke_test: bool = False,
     fp16: bool = True,
 ) -> Seq2SeqTrainingArguments:
-    """Build Seq2SeqTrainingArguments for Colab T4 (or CPU smoke test)."""
+    """Build Seq2SeqTrainingArguments for Colab T4 (or CPU smoke test).
+
+    Full run: AdamW (Trainer default), FP16 on CUDA, batch 2, grad accum 4,
+    5 epochs, early stopping on val WER, TensorBoard logging.
+    """
+    logging_dir = str(output_dir / "runs")
+    use_fp16 = fp16 and torch.cuda.is_available()
+
     if smoke_test:
         return Seq2SeqTrainingArguments(
             output_dir=str(output_dir),
+            logging_dir=logging_dir,
             per_device_train_batch_size=2,
             per_device_eval_batch_size=2,
             gradient_accumulation_steps=4,
@@ -148,37 +169,42 @@ def build_training_arguments(
             eval_strategy="steps",
             eval_steps=3,
             logging_steps=1,
+            save_strategy="steps",
             save_steps=3,
             save_total_limit=2,
             predict_with_generate=True,
             generation_max_length=128,
-            fp16=fp16 and torch.cuda.is_available(),
-            report_to=[],
+            fp16=use_fp16,
+            report_to=["tensorboard"],
             remove_unused_columns=False,
             label_names=["labels"],
-            load_best_model_at_end=False,
+            load_best_model_at_end=True,
+            metric_for_best_model="wer",
+            greater_is_better=False,
         )
 
     return Seq2SeqTrainingArguments(
         output_dir=str(output_dir),
+        logging_dir=logging_dir,
         per_device_train_batch_size=2,
         per_device_eval_batch_size=2,
         gradient_accumulation_steps=4,
         learning_rate=1e-4,
         warmup_steps=500,
-        max_steps=2000,
-        eval_strategy="steps",
-        eval_steps=200,
-        logging_steps=100,
-        save_steps=500,
+        num_train_epochs=NUM_TRAIN_EPOCHS,
+        eval_strategy="epoch",
+        logging_steps=50,
+        save_strategy="epoch",
         save_total_limit=3,
         predict_with_generate=True,
         generation_max_length=225,
-        fp16=fp16 and torch.cuda.is_available(),
+        fp16=use_fp16,
         report_to=["tensorboard"],
         remove_unused_columns=False,
         label_names=["labels"],
-        load_best_model_at_end=False,
+        load_best_model_at_end=True,
+        metric_for_best_model="wer",
+        greater_is_better=False,
     )
 
 
@@ -192,7 +218,12 @@ def create_trainer(
 ) -> tuple[Seq2SeqTrainer, WhisperProcessor]:
     set_seed(seed)
     model, processor = load_whisper_model_and_processor()
-    train_ds, eval_ds = load_manifest_datasets(project_root, manifest_dir=manifest_dir)
+    train_ds, eval_ds = load_manifest_datasets(
+        project_root,
+        manifest_dir=manifest_dir,
+        max_train_samples=SMOKE_TRAIN_SAMPLES if smoke_test else None,
+        max_val_samples=SMOKE_VAL_SAMPLES if smoke_test else None,
+    )
 
     prepare_fn = build_prepare_fn(processor)
     train_ds = train_ds.map(prepare_fn, remove_columns=train_ds.column_names)
@@ -204,6 +235,7 @@ def create_trainer(
     )
 
     training_args = build_training_arguments(output_dir, smoke_test=smoke_test)
+    callbacks = [EarlyStoppingCallback(early_stopping_patience=EARLY_STOPPING_PATIENCE)]
 
     trainer = Seq2SeqTrainer(
         args=training_args,
@@ -213,6 +245,7 @@ def create_trainer(
         data_collator=data_collator,
         compute_metrics=build_compute_metrics(processor),
         processing_class=processor.feature_extractor,
+        callbacks=callbacks,
     )
     return trainer, processor
 
@@ -226,6 +259,7 @@ def train_and_save(
     seed: int = DEFAULT_SEED,
 ) -> dict:
     """Run training and return metrics + checkpoint path."""
+    output_dir.mkdir(parents=True, exist_ok=True)
     trainer, processor = create_trainer(
         project_root,
         output_dir,
@@ -238,7 +272,9 @@ def train_and_save(
     processor.save_pretrained(str(output_dir))
 
     return {
-        "train_loss": train_result.training_loss,
-        "eval_metrics": eval_metrics,
+        "train_loss": float(train_result.training_loss),
+        "eval_metrics": {k: float(v) for k, v in eval_metrics.items()},
         "checkpoint_dir": str(output_dir),
+        "smoke_test": smoke_test,
+        "global_step": int(train_result.global_step),
     }
