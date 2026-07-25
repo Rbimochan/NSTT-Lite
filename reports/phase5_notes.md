@@ -40,6 +40,19 @@ ASR "before" baseline for the Phase 6 before/after comparison.
    fails hard on this Nepali split; that gap is exactly what Phase 6
    fine-tuning is meant to close.
 
+7. **Prior XLS-R evidence from this repo's history.** An earlier audit in this
+   repository evaluated `gagan3012/wav2vec2-xlsr-nepali` (an XLS-R/CTC model
+   fine-tuned on the single-speaker OpenSLR-43 corpus): 4.91% WER in-domain,
+   collapsing to ~65% WER on a multi-speaker OpenSLR-54 test set. That is
+   direct, first-hand evidence that (a) narrow-corpus CTC fine-tunes
+   generalize poorly across speakers, and (b) speaker-diverse training data —
+   which this project's 160-speaker speaker-disjoint subset provides — matters
+   at least as much as architecture choice.
+8. **Deployment path.** Phase 8 requires a production-style benchmark, and
+   CTranslate2/Faster-Whisper is a mature conversion path for Whisper
+   specifically; the rejected alternatives have weaker or no equivalent
+   tooling.
+
 ## Scope link to Phase 4 / Phase 6
 
 Phase 4 deliberately measured only Whisper-small (not medium/large/MMS) so
