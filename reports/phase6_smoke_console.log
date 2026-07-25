@@ -1,139 +1,0 @@
-Device: {
-  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
-  "python": "3.13.13",
-  "torch": "2.13.0",
-  "cuda_available": false,
-  "cuda_device": null,
-  "mps_available": true
-}
-Output: /Users/bimochankunwar/Desktop/NSTT-Lite/models/whisper-small-ft-smoke
-Mode: smoke
-Generating train split: 0 examples [00:00, ? examples/s]Generating train split: 32 examples [00:00, 3428.64 examples/s]
-Generating train split: 0 examples [00:00, ? examples/s]Generating train split: 8 examples [00:00, 13934.56 examples/s]
-Map:   0%|          | 0/32 [00:00<?, ? examples/s]Map:   3%|▎         | 1/32 [00:00<00:23,  1.32 examples/s]Map:  88%|████████▊ | 28/32 [00:00<00:00, 43.74 examples/s]Map: 100%|██████████| 32/32 [00:00<00:00, 35.19 examples/s]
-Map:   0%|          | 0/8 [00:00<?, ? examples/s]Map: 100%|██████████| 8/8 [00:00<00:00, 185.43 examples/s]
-  0%|          | 0/6 [00:00<?, ?it/s]/Users/bimochankunwar/Desktop/NSTT-Lite/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
-  super().__init__(loader)
-Passing a tuple of `past_key_values` is deprecated and will be removed in Transformers v4.43.0. You should pass an instance of `EncoderDecoderCache` instead, e.g. `past_key_values=EncoderDecoderCache.from_legacy_cache(past_key_values)`.
- 17%|█▋        | 1/6 [00:08<00:40,  8.14s/it]                                              17%|█▋        | 1/6 [00:08<00:40,  8.14s/it] 33%|███▎      | 2/6 [00:57<02:10, 32.55s/it]                                              33%|███▎      | 2/6 [00:58<02:10, 32.55s/it] 50%|█████     | 3/6 [01:40<01:52, 37.34s/it]                                              50%|█████     | 3/6 [01:41<01:52, 37.34s/it]Due to a bug fix in https://github.com/huggingface/transformers/pull/28687 transcription using a multilingual Whisper will default to language detection followed by transcription instead of translation to English.This might be a breaking change for your use case. If you want to instead always translate your audio to English, make sure to pass `language='en'`.
-The attention mask is not set and cannot be inferred from input because pad token is same as eos token. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
-{'loss': 1.7017, 'grad_norm': 32.87692642211914, 'learning_rate': 8.333333333333334e-05, 'epoch': 0.25}
-{'loss': 3.3902, 'grad_norm': 63.699134826660156, 'learning_rate': 6.666666666666667e-05, 'epoch': 0.5}
-{'loss': 3.2288, 'grad_norm': 105.72396850585938, 'learning_rate': 5e-05, 'epoch': 0.75}
-
-  0%|          | 0/4 [00:00<?, ?it/s][A
- 50%|█████     | 2/4 [00:04<00:04,  2.03s/it][A
- 75%|███████▌  | 3/4 [00:09<00:03,  3.24s/it][A
-100%|██████████| 4/4 [00:13<00:00,  3.54s/it][A                                             
-                                             [A 50%|█████     | 3/6 [02:02<01:52, 37.34s/it]
-100%|██████████| 4/4 [00:13<00:00,  3.54s/it][A
-                                             [A/Users/bimochankunwar/Desktop/NSTT-Lite/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py:2810: UserWarning: Moving the following attributes in the config to the generation config: {'max_length': 448, 'suppress_tokens': [], 'begin_suppress_tokens': [220, 50257]}. You are seeing this warning because you've set generation parameters in the model config, as opposed to in the generation config.
-  warnings.warn(
- 67%|██████▋   | 4/6 [04:10<02:43, 81.85s/it]                                              67%|██████▋   | 4/6 [04:15<02:43, 81.85s/it]/Users/bimochankunwar/Desktop/NSTT-Lite/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
-  super().__init__(loader)
- 83%|████████▎ | 5/6 [07:02<01:54, 114.06s/it]                                               83%|████████▎ | 5/6 [07:09<01:54, 114.06s/it]100%|██████████| 6/6 [09:59<00:00, 135.72s/it]                                              100%|██████████| 6/6 [10:06<00:00, 135.72s/it]{'eval_loss': 1.7098305225372314, 'eval_wer': 1.0, 'eval_runtime': 21.0677, 'eval_samples_per_second': 0.38, 'eval_steps_per_second': 0.19, 'epoch': 0.75}
-{'loss': 1.6384, 'grad_norm': 35.09365463256836, 'learning_rate': 3.3333333333333335e-05, 'epoch': 1.0}
-{'loss': 1.009, 'grad_norm': 24.804903030395508, 'learning_rate': 1.6666666666666667e-05, 'epoch': 1.25}
-{'loss': 0.8908, 'grad_norm': 22.905241012573242, 'learning_rate': 0.0, 'epoch': 1.5}
-
-  0%|          | 0/4 [00:00<?, ?it/s][A
- 50%|█████     | 2/4 [00:01<00:01,  1.19it/s][A
- 75%|███████▌  | 3/4 [00:03<00:01,  1.40s/it][A
-100%|██████████| 4/4 [00:05<00:00,  1.46s/it][A                                              
-                                             [A100%|██████████| 6/6 [10:17<00:00, 135.72s/it]
-100%|██████████| 4/4 [00:05<00:00,  1.46s/it][A
-                                             [AThere were missing keys in the checkpoint model loaded: ['proj_out.weight'].
-                                              100%|██████████| 6/6 [10:40<00:00, 135.72s/it]100%|██████████| 6/6 [10:40<00:00, 106.72s/it]
-/Users/bimochankunwar/Desktop/NSTT-Lite/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
-  super().__init__(loader)
-{'eval_loss': 1.0585989952087402, 'eval_wer': 0.92, 'eval_runtime': 10.3818, 'eval_samples_per_second': 0.771, 'eval_steps_per_second': 0.385, 'epoch': 1.5}
-{'train_runtime': 640.2772, 'train_samples_per_second': 0.075, 'train_steps_per_second': 0.009, 'train_loss': 1.9764537711938222, 'epoch': 1.5}
-  0%|          | 0/4 [00:00<?, ?it/s] 50%|█████     | 2/4 [00:01<00:01,  1.20it/s] 75%|███████▌  | 3/4 [00:05<00:02,  2.29s/it]100%|██████████| 4/4 [00:07<00:00,  2.06s/it]100%|██████████| 4/4 [00:07<00:00,  1.98s/it]
-{
-  "created_at": "20260724T065232Z",
-  "device": {
-    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
-    "python": "3.13.13",
-    "torch": "2.13.0",
-    "cuda_available": false,
-    "cuda_device": null,
-    "mps_available": true
-  },
-  "train_loss": 1.9764537711938222,
-  "eval_metrics": {
-    "eval_loss": 1.0585989952087402,
-    "eval_wer": 0.92,
-    "eval_runtime": 12.3599,
-    "eval_samples_per_second": 0.647,
-    "eval_steps_per_second": 0.324,
-    "epoch": 1.5
-  },
-  "checkpoint_dir": "/Users/bimochankunwar/Desktop/NSTT-Lite/models/whisper-small-ft-smoke",
-  "smoke_test": true,
-  "global_step": 6
-}
-Saved: /Users/bimochankunwar/Desktop/NSTT-Lite/reports/phase6_train_smoke_20260724T065232Z.json
-ormers/feature_extraction_utils.py", line 511, in get_feature_extractor_dict
-    resolved_feature_extractor_file = cached_file(
-        pretrained_model_name_or_path,
-    ...<9 lines>...
-        revision=revision,
-    )
-  File "/Users/bimochankunwar/Desktop/NSTT-Lite/.venv/lib/python3.13/site-packages/transformers/utils/hub.py", line 342, in cached_file
-    resolved_file = hf_hub_download(
-        path_or_repo_id,
-    ...<10 lines>...
-        local_files_only=local_files_only,
-    )
-  File "/Users/bimochankunwar/Desktop/NSTT-Lite/.venv/lib/python3.13/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
-    return fn(*args, **kwargs)
-  File "/Users/bimochankunwar/Desktop/NSTT-Lite/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1014, in hf_hub_download
-    return _hf_hub_download_to_cache_dir(
-        # Destination
-    ...<14 lines>...
-        force_download=force_download,
-    )
-  File "/Users/bimochankunwar/Desktop/NSTT-Lite/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1077, in _hf_hub_download_to_cache_dir
-    (url_to_download, etag, commit_hash, expected_size, xet_file_data, head_call_error) = _get_metadata_or_catch_error(
-                                                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
-        repo_id=repo_id,
-        ^^^^^^^^^^^^^^^^
-    ...<10 lines>...
-        relative_filename=relative_filename,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "/Users/bimochankunwar/Desktop/NSTT-Lite/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1550, in _get_metadata_or_catch_error
-    metadata = get_hf_file_metadata(
-        url=url, proxies=proxies, timeout=etag_timeout, headers=headers, token=token, endpoint=endpoint
-    )
-  File "/Users/bimochankunwar/Desktop/NSTT-Lite/.venv/lib/python3.13/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
-    return fn(*args, **kwargs)
-  File "/Users/bimochankunwar/Desktop/NSTT-Lite/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1467, in get_hf_file_metadata
-    r = _request_wrapper(
-        method="HEAD",
-    ...<5 lines>...
-        timeout=timeout,
-    )
-  File "/Users/bimochankunwar/Desktop/NSTT-Lite/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 283, in _request_wrapper
-    response = _request_wrapper(
-        method=method,
-    ...<2 lines>...
-        **params,
-    )
-  File "/Users/bimochankunwar/Desktop/NSTT-Lite/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 306, in _request_wrapper
-    response = http_backoff(method=method, url=url, **params)
-  File "/Users/bimochankunwar/Desktop/NSTT-Lite/.venv/lib/python3.13/site-packages/huggingface_hub/utils/_http.py", line 326, in http_backoff
-    raise err
-  File "/Users/bimochankunwar/Desktop/NSTT-Lite/.venv/lib/python3.13/site-packages/huggingface_hub/utils/_http.py", line 307, in http_backoff
-    response = session.request(method=method, url=url, **kwargs)
-  File "/Users/bimochankunwar/Desktop/NSTT-Lite/.venv/lib/python3.13/site-packages/requests/sessions.py", line 651, in request
-    resp = self.send(prep, **send_kwargs)
-  File "/Users/bimochankunwar/Desktop/NSTT-Lite/.venv/lib/python3.13/site-packages/requests/sessions.py", line 784, in send
-    r = adapter.send(request, **kwargs)
-  File "/Users/bimochankunwar/Desktop/NSTT-Lite/.venv/lib/python3.13/site-packages/huggingface_hub/utils/_http.py", line 96, in send
-    return super().send(request, *args, **kwargs)
-           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/bimochankunwar/Desktop/NSTT-Lite/.venv/lib/python3.13/site-packages/requests/adapters.py", line 723, in send
-    raise ProxyError(e, request=request)
-requests.exceptions.ProxyError: (MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /openai/whisper-small/resolve/main/preprocessor_config.json (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))"), '(Request ID: 922225dd-c607-4185-b82d-e2089d9ff646)')

@@ -1,2 +1,0 @@
-dataset,split,utterances,wer,cer,note
-SLR54,test,150,4.9266,2.7997,"Zero-shot baseline (openai/whisper-small, no fine-tuning)"

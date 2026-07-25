@@ -1,6 +1,0 @@
-{
-  "model": "openai/whisper-small",
-  "wer": 4.926605504587156,
-  "cer": 2.7997043606799705,
-  "num_utterances": 150
-}

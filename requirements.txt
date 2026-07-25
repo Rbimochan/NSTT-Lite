@@ -1,4 +1,4 @@
-# NSTT-Lite pinned dependencies (Plan 1)
+# NSTT-Lite pinned dependencies — XLS-R Nepali ASR audit + fine-tuning
 # Colab runtimes ship CUDA-enabled torch/torchvision/torchaudio as a matched
 # trio — do not pin any of the three here, or pip will break that pairing
 # (e.g. "operator torchvision::nms does not exist").
@@ -8,6 +8,10 @@
 # `is_offline_mode` export that transformers 4.49 imports at load time —
 # pin both exactly rather than using >= ranges, which let pip leave the
 # broken huggingface_hub version in place.
+#
+# Experiment tracking is MLflow (per explicit project decision) — TensorBoard
+# and the Whisper-specific deployment stack (ctranslate2/faster-whisper) were
+# removed with the pivot away from Whisper.
 transformers==4.49.0
 huggingface_hub==0.27.1
 datasets==3.2.0
@@ -17,9 +21,6 @@ jiwer==3.0.5
 librosa==0.10.2.post1
 soundfile==0.12.1
 matplotlib==3.10.0
-streamlit==1.41.1
 pandas==2.2.3
-tensorboard==2.18.0
-ctranslate2==4.5.0
-faster-whisper==1.1.1
+mlflow==2.20.1
 scikit-learn==1.6.1

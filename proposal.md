@@ -1,4 +1,4 @@
-# Project Proposal — NSTT-Lite: Nepali Speech-to-Text with Whisper-Small
+# Project Proposal — NSTT-Lite: Auditing and Repairing a Published Nepali ASR Model
 
 **Module:** ST7088CEM — Artificial Neural Networks
 **Student:** Bimochan Raj Kunwar — Coventry ID: 17108924
@@ -7,54 +7,72 @@
 
 ## Problem
 
-Automatic speech recognition (ASR) for Nepali is under-served by off-the-shelf
-multilingual models: Nepali is a low-resource language in the pretraining mix
-of general-purpose ASR systems, so zero-shot transcription quality is
-substantially worse than for high-resource languages. This project fine-tunes
-OpenAI's Whisper-small on a Nepali speech corpus and measures the improvement
-over zero-shot performance, while also tackling a second, distinct task:
-classifying speaker gender from the model's own encoder representations.
+`gagan3012/wav2vec2-xlsr-nepali` is a published Hugging Face XLS-R (wav2vec2)
+model for Nepali speech recognition that self-reports **5.97% WER** — a
+remarkably strong number for a low-resource language. However, that figure was
+measured on the model's own training corpus, OpenSLR-43, which is effectively
+single-speaker (one female voice). My preliminary experiments confirm the claim
+technically holds in-domain (I measured **4.91% WER** on OpenSLR-43) but the
+same model collapses to roughly **65% WER** on multi-speaker Nepali speech
+(OpenSLR-54) — a >13x degradation. The published benchmark therefore does not
+describe real-world performance. This project audits that claim rigorously and
+then repairs the model.
 
-## Tasks (satisfying "more than one task")
+## Tasks
 
-1. **ASR fine-tuning.** Fine-tune Whisper-small on a Nepali speech subset;
-   report WER/CER before (zero-shot) and after fine-tuning.
-2. **Speaker gender classification.** Train a lightweight classifier head on
-   mean-pooled Whisper encoder embeddings to predict speaker gender, evaluated
-   against a trivial majority-class baseline.
+1. **Benchmark audit.** Reproduce the self-reported figure in-domain
+   (OpenSLR-43) and measure the same checkpoint zero-shot on a speaker-disjoint
+   multi-speaker test split (OpenSLR-54), quantifying the generalization gap.
+2. **Fine-tuning.** Fine-tune the same XLS-R model (CTC objective) on a
+   ~15-hour, 160-speaker, speaker-disjoint OpenSLR-54 training subset to close
+   that gap.
+3. **Generalization re-evaluation.** Evaluate original vs. fine-tuned
+   checkpoints on both test sets — including a catastrophic-forgetting check
+   on the original corpus — plus error analysis and a speaker-leakage ablation.
 
-## Dataset
+## Datasets
 
-**OpenSLR-54** — a crowdsourced Nepali ASR corpus (Kjartansson et al., SLTU
-2018), 157,905 utterances, CC BY-SA 4.0.
-Link: https://www.openslr.org/54/
+- **OpenSLR-54** — crowdsourced multi-speaker Nepali ASR corpus (Kjartansson
+  et al., SLTU 2018), 157,905 utterances, CC BY-SA 4.0.
+  Link: https://www.openslr.org/54/
+  (Working subset already prepared: 15,171 utterances / 160 speakers /
+  15.03 hours, speaker-disjoint 80/10/10 split, zero speaker overlap.)
+- **OpenSLR-43** — the model's own training corpus (single-speaker female
+  Nepali TTS-style data), used only for in-domain reproduction of the claim.
+  Link: https://www.openslr.org/43/
 
-Chosen because: it is the largest open Nepali ASR corpus available, includes
-multiple speakers (enabling a genuine speaker-disjoint train/test split,
-unlike single-speaker TTS-style corpora), and ships only audio + transcript +
-speaker ID — no demographic metadata, which is itself a modeling constraint
-this project addresses explicitly (Phase 3) rather than ignores.
+The two corpora are kept strictly separate in all results.
 
-## Work plan (10 phases — see `10_phase_plan.md` for full detail)
+## Method and infrastructure
+
+Fine-tuning uses the Hugging Face `transformers` CTC training stack on a Colab
+T4 GPU (FP16, batch 2, gradient accumulation, early stopping on validation
+WER). All experiments — audit runs, training, and re-evaluation — are tracked
+with **MLflow** (parameters, WER/CER metrics, artifacts), giving a reproducible
+evidence trail; environment versions are pinned and device screenshots
+captured throughout.
+
+## Work plan (10 phases)
 
 | Phase | Deliverable |
 |---|---|
 | 1 | This proposal |
-| 2 | Environment setup, reproducibility scaffolding (manifests, speaker-disjoint split) |
-| 3 | Data preparation: preprocessing, acoustic gender pseudo-labels |
-| 4 | Zero-shot baseline (Whisper-small, and comparison models) |
+| 2 | Environment + MLflow reproducibility setup |
+| 3 | Data preparation (complete: speaker-disjoint 15hr subset) |
+| 4 | Baseline audit: in-domain vs. out-of-domain zero-shot WER |
 | 5 | Algorithm selection justification |
-| 6 | ASR fine-tuning (full-scale, GPU) |
-| 7 | Gender classification (second task) |
-| 8 | Deployment benchmark (CTranslate2/Faster-Whisper) |
-| 9 | Experimental analysis, ablations, error analysis |
+| 6 | XLS-R fine-tuning on speaker-diverse data (Colab T4) |
+| 7 | Generalization re-evaluation (4-cell before/after × in/out-of-domain) |
+| 8 | Efficiency benchmark (latency, size, int8 quantization) |
+| 9 | Error analysis, leakage ablation, discussion |
 | 10 | Report writing, evidence assembly, submission |
 
 ## Achievability
 
-This plan reuses a working pipeline (data loading, preprocessing, splitting,
-training, evaluation) already prototyped and validated at reduced scale in
-earlier iterations of this project, so the risk is compute time (a full 5-epoch
-Colab T4 run), not unproven methodology. Each phase has a concrete, checkable
-output (a report file, a checkpoint, a metric), so progress is verifiable at
-every step rather than only at submission.
+The audit half is already demonstrated end-to-end at small scale (the 4.91% /
+~65% preliminary numbers above), and the data pipeline (download,
+preprocessing, speaker-disjoint splitting) is built and validated. The main
+remaining cost is the Phase 6 GPU fine-tuning run, which fits a free Colab T4
+budget with checkpointed, resumable training. Every phase produces a concrete,
+checkable artifact (a metric, a checkpoint, an MLflow run), so progress is
+verifiable throughout rather than only at submission.
