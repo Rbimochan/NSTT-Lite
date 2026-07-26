@@ -12,10 +12,16 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import platform
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+
+# aten::_ctc_loss is not implemented on Apple MPS; this makes torch fall back
+# to CPU for that single op (must be set before torch initializes). No effect
+# on CUDA runs. Ref: the NotImplementedError raised by torch.ctc_loss on MPS.
+os.environ.setdefault("PYTORCH_ENABLE_MPS_FALLBACK", "1")
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 

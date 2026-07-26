@@ -42,7 +42,11 @@ def load_model_and_processor(
     model_id: str = XLSR_MODEL_ID,
 ) -> tuple[Wav2Vec2ForCTC, Wav2Vec2Processor]:
     processor = Wav2Vec2Processor.from_pretrained(model_id)
-    model = Wav2Vec2ForCTC.from_pretrained(model_id)
+    # torch's scaled_dot_product_attention raises NotImplementedError on Apple
+    # MPS when dropout is active (i.e. in training mode); fall back to eager
+    # attention off-CUDA so local smoke tests run. CUDA (Colab T4) keeps SDPA.
+    attn = "sdpa" if torch.cuda.is_available() else "eager"
+    model = Wav2Vec2ForCTC.from_pretrained(model_id, attn_implementation=attn)
     # Standard wav2vec2 fine-tuning practice: the convolutional feature
     # encoder was trained on far more audio than we have -- freeze it.
     model.freeze_feature_encoder()
