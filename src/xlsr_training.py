@@ -20,11 +20,30 @@ from datasets import Audio, Dataset
 from transformers import (
     EarlyStoppingCallback,
     Trainer,
+    TrainerCallback,
     TrainingArguments,
     Wav2Vec2ForCTC,
     Wav2Vec2Processor,
     set_seed,
 )
+
+
+class MPSCacheClearCallback(TrainerCallback):
+    """Long MPS training runs accumulate allocator fragmentation until
+    torch.autograd's backward pass OOMs (observed: crashed ~1580 steps in,
+    17GB allocated, right after an eval pass). Periodic empty_cache() keeps
+    the allocator from growing unbounded. No-op on CUDA/CPU."""
+
+    def _clear(self) -> None:
+        if torch.backends.mps.is_available():
+            torch.mps.empty_cache()
+
+    def on_step_end(self, args, state, control, **kwargs):
+        if state.global_step % 50 == 0:
+            self._clear()
+
+    def on_evaluate(self, args, state, control, **kwargs):
+        self._clear()
 
 from src.manifests import read_jsonl_manifest
 from src.wer_metrics import compute_wer_cer
@@ -209,6 +228,7 @@ def create_trainer(
         compute_metrics=build_compute_metrics(processor),
         processing_class=processor.feature_extractor,
     )
+    trainer.add_callback(MPSCacheClearCallback())
     if not smoke_test:
         trainer.add_callback(EarlyStoppingCallback(early_stopping_patience=2))
     return trainer, processor
