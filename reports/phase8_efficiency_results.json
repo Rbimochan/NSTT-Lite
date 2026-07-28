@@ -1,0 +1,29 @@
+{
+  "checkpoint": "/Users/bimochankunwar/Desktop/NSTT-Lite/models/xlsr-ft",
+  "n_samples": 50,
+  "n_latency_runs": 20,
+  "device": "cpu",
+  "fp32": {
+    "model_size_mb": 1203.5573768615723,
+    "mean_latency_s": 0.20469055199064315,
+    "min_latency_s": 0.14858783304225653,
+    "max_latency_s": 0.3167113340459764,
+    "num_runs": 20,
+    "wer": 0.3581081081081081,
+    "cer": 0.07165775401069518,
+    "num_utterances": 50
+  },
+  "int8_dynamic": {
+    "model_size_mb": 48.45556640625,
+    "mean_latency_s": 0.33524910402484237,
+    "min_latency_s": 0.20782845804933459,
+    "max_latency_s": 0.5563514999812469,
+    "num_runs": 20,
+    "wer": 0.36486486486486486,
+    "cer": 0.0748663101604278,
+    "num_utterances": 50
+  },
+  "speedup_x": 0.6105625623848806,
+  "size_reduction_pct": 95.97397121750821,
+  "wer_delta": 0.006756756756756743
+}
