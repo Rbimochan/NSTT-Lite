@@ -39,6 +39,11 @@ def main() -> None:
     parser.add_argument("--output-dir", default=None)
     parser.add_argument("--resume", default=None, help="'true' or a checkpoint path")
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument(
+        "--manifest-dir", default=None, help="defaults to data/manifests; use data/manifests_leaky for the Phase 9 ablation"
+    )
+    parser.add_argument("--mlflow-experiment", default="phase6-finetune")
+    parser.add_argument("--summary-tag", default=None, help="filename tag for reports/phase6_train_<tag>_<ts>.json")
     args = parser.parse_args()
 
     output_dir = Path(
@@ -66,21 +71,23 @@ def main() -> None:
         )
 
     mlflow.set_tracking_uri(f"file://{PROJECT_ROOT / 'mlruns'}")
-    mlflow.set_experiment("phase6-finetune")
+    mlflow.set_experiment(args.mlflow_experiment)
 
+    manifest_dir = Path(args.manifest_dir) if args.manifest_dir else None
     result = train_and_save(
         PROJECT_ROOT,
         output_dir,
         smoke_test=args.smoke,
         resume_from_checkpoint=resume,
         seed=args.seed,
+        manifest_dir=manifest_dir,
     )
 
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    summary = {"created_at": stamp, "device": info, "smoke_test": args.smoke, **result}
+    summary = {"created_at": stamp, "device": info, "smoke_test": args.smoke, "manifest_dir": str(manifest_dir) if manifest_dir else None, **result}
     reports_dir = PROJECT_ROOT / "reports"
     reports_dir.mkdir(parents=True, exist_ok=True)
-    tag = "smoke" if args.smoke else "full"
+    tag = args.summary_tag or ("smoke" if args.smoke else "full")
     out = reports_dir / f"phase6_train_{tag}_{stamp}.json"
     out.write_text(json.dumps(summary, indent=2), encoding="utf-8")
 

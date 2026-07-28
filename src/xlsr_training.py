@@ -88,10 +88,11 @@ def manifest_to_dataset(rows: list[dict], project_root: Path) -> Dataset:
 def load_datasets(
     project_root: Path,
     *,
+    manifest_dir: Path | None = None,
     max_train: int | None = None,
     max_eval: int | None = None,
 ) -> tuple[Dataset, Dataset]:
-    manifest_dir = project_root / "data" / "manifests"
+    manifest_dir = manifest_dir or (project_root / "data" / "manifests")
     train_rows = read_jsonl_manifest(manifest_dir / "train.jsonl")
     val_rows = read_jsonl_manifest(manifest_dir / "val.jsonl")
     if max_train is not None:
@@ -204,6 +205,7 @@ def create_trainer(
     *,
     smoke_test: bool = False,
     seed: int = DEFAULT_SEED,
+    manifest_dir: Path | None = None,
     max_train: int | None = None,
     max_eval: int | None = None,
 ) -> tuple[Trainer, Wav2Vec2Processor]:
@@ -212,7 +214,9 @@ def create_trainer(
 
     if smoke_test and max_train is None:
         max_train, max_eval = 32, 8
-    train_ds, eval_ds = load_datasets(project_root, max_train=max_train, max_eval=max_eval)
+    train_ds, eval_ds = load_datasets(
+        project_root, manifest_dir=manifest_dir, max_train=max_train, max_eval=max_eval
+    )
 
     prepare = build_prepare_fn(processor)
     train_ds = train_ds.map(prepare, remove_columns=train_ds.column_names)
@@ -241,6 +245,7 @@ def train_and_save(
     smoke_test: bool = False,
     resume_from_checkpoint: str | bool | None = None,
     seed: int = DEFAULT_SEED,
+    manifest_dir: Path | None = None,
     max_train: int | None = None,
     max_eval: int | None = None,
 ) -> dict:
@@ -249,6 +254,7 @@ def train_and_save(
         output_dir,
         smoke_test=smoke_test,
         seed=seed,
+        manifest_dir=manifest_dir,
         max_train=max_train,
         max_eval=max_eval,
     )
