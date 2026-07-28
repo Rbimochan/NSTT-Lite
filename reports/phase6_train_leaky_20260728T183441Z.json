@@ -1,0 +1,24 @@
+{
+  "created_at": "20260728T183441Z",
+  "device": {
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.11.15",
+    "torch": "2.13.0",
+    "cuda_available": false,
+    "cuda_device": null
+  },
+  "smoke_test": false,
+  "manifest_dir": "data/manifests_leaky",
+  "train_loss": 0.23293347871059952,
+  "eval_metrics": {
+    "eval_loss": 0.3965066969394684,
+    "eval_wer": 0.6458196181698486,
+    "eval_cer": 0.1731336202514487,
+    "eval_runtime": 201.941,
+    "eval_samples_per_second": 7.512,
+    "eval_steps_per_second": 3.759,
+    "epoch": 5.0
+  },
+  "checkpoint_dir": "models/xlsr-ft-leaky",
+  "global_step": 7585
+}

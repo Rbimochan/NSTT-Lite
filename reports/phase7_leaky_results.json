@@ -1,0 +1,16 @@
+{
+  "checkpoint": "models/xlsr-ft-leaky",
+  "tag": "leaky",
+  "in_domain_openslr43": {
+    "dataset": "OpenSLR-43 (in-domain)",
+    "num_utterances": 150,
+    "wer": 0.1695501730103806,
+    "cer": 0.03048342399671559
+  },
+  "out_of_domain_openslr54": {
+    "dataset": "OpenSLR-54 speaker-disjoint test (out-of-domain)",
+    "num_utterances": 150,
+    "wer": 0.3255269320843091,
+    "cer": 0.08195516354281514
+  }
+}
