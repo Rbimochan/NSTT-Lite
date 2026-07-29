@@ -1981,7 +1981,11 @@ Six MLflow experiments were logged over the course of this project (local `mlrun
 
 ![Model metrics continued: total_flos, eval_steps_per_second, eval_cer, train throughput](appendix_screenshots/06_model_metrics_bottom.png)
 
-## C.3 Key result files
+# Appendix D — Extended Results Tables
+
+Full machine-readable result files for every phase-4/7/8/9 measurement quoted in the report, plus the complete per-utterance error-analysis listing (150 utterances, Section 4.4), for independent verification beyond the summary tables in the main report body.
+
+## D.1 Summary result files
 
 ### `reports/phase4_audit_results.json`
 
@@ -2299,3 +2303,160 @@ Six MLflow experiments were logged over the course of this project (local `mlrun
   ]
 }
 ```
+
+## D.2 Full per-utterance error analysis (150 utterances)
+
+Total rows: 150. Categories are heuristic (jiwer alignment + regex), not mutually exclusive.
+
+| Utterance ID | Speaker | Gender (pseudo) | Reference | Hypothesis | WER | CER | Categories |
+|---|---|---|---|---|---|---|---|
+| 0685de35bc | 8efbc | male | केवल तिब्बत | केवल तिब्बत | 0.00 | 0.00 | other |
+| d33d533af8 | 8efbc | male | अहिलेको हुलाक भवनको | अहिलेको हुलाक भवनको | 0.00 | 0.00 | other |
+| df8a0b212a | efa9c | male | हुने गर्थ्यो | हुने गरथ्यो | 0.50 | 0.08 | oov_rare_vocabulary |
+| 356225f520 | 07179 | female | बाह्य मामलाको मन्त्रालयको | भाइदे मामलाको मन्त्रालयको | 0.33 | 0.16 | oov_rare_vocabulary, phonetic_confusion |
+| dad71f7b34 | 1a81b | male | तयार पार्नु भन्दा | तयार पार्नुभन्दा | 0.67 | 0.06 | oov_rare_vocabulary |
+| d2b4813104 | 12d45 | female | बेलुका सुत्ने बेलामा | बेलुका सुत्ने बेलामा | 0.00 | 0.00 | other |
+| 7da0e9a7b7 | 99866 | female | राज्यमाथि हासिल गर्‍यो | राज्यमाति हासेल गर‍यो | 1.00 | 0.14 | noise_degradation, oov_rare_vocabulary, phonetic_confusion |
+| 0f7a64d0bd | 70e10 | female | निबन्ध भित्रै पर्दछन् | निबन्ध भित्रै पर्दछन् | 0.00 | 0.00 | other |
+| 7edfb32bd1 | c46b5 | male | गर्ने प्रविधिमा हुने | गर्ने प्रविधिमा हुने | 0.00 | 0.00 | other |
+| 34f3dc6a6a | 7f9c6 | female | उनी गाउँको एउटा | उनी गाउँको एउटा | 0.00 | 0.00 | other |
+| 0ca2b67e85 | e8f6f | male | यस सम्बन्धमा विशेष | यस सम्बन्धमा विशेष | 0.00 | 0.00 | other |
+| 3b99e9373e | da0cf | male | सेती हुन् | सेती हुन् | 0.00 | 0.00 | other |
+| 8e47838650 | 1a81b | male | महत्त्वपूर्ण स्थान | महत्त्वपूर्णै स्थान | 0.50 | 0.06 | oov_rare_vocabulary |
+| 8ccd499b56 | da0cf | male | बनाउनबाट जोगाउँदछ | बनाउनबाटा जोगआउँदछ | 1.00 | 0.12 | noise_degradation, oov_rare_vocabulary, phonetic_confusion |
+| 89305ffa02 | 8efbc | male | अन्तिम युग हो | अन्तिम युग हो | 0.00 | 0.00 | other |
+| 8e908cd51d | 07179 | female | पिता पोषण पाण्डेको | पिटा पोषन पाण्डेको | 0.67 | 0.11 | oov_rare_vocabulary, phonetic_confusion |
+| 3856d8968f | 8efbc | male | ड्रागनफलसँग मिल्दोजुल्दो सिउँडी | ड्रागनफलसँग मिल्दोजुल्दो सिउँडी | 0.00 | 0.00 | other |
+| 78cb6e474d | 9d08c | male | पार्टीका थिए | पार्टीका थिए | 0.00 | 0.00 | other |
+| 0a524e5006 | 76dab | female | एउटा ऐतिहासिक धार्मिक | एउटा ऐतिहासिक धार्मिक | 0.00 | 0.00 | other |
+| d399359741 | efa9c | male | खोज बाकस बेकार छ | खोज बाकास व्यकार छ | 0.50 | 0.25 | oov_rare_vocabulary, phonetic_confusion |
+| 0cf3ebaf89 | 07179 | female | उद्देश्यले ५ अप्रिल | उद्येश्यले पच अपरेल | 1.00 | 0.26 | noise_degradation, oov_rare_vocabulary, phonetic_confusion |
+| 3a523d2f4f | 8efbc | male | गर्नका लागि छिमेकी | गर्नका लागि छिमेकी | 0.00 | 0.00 | other |
+| 0f5492d100 | 99866 | female | ग्रस्त र अवसरवादी | ग्रस्त र अवसरवादी | 0.00 | 0.00 | other |
+| 09607fb527 | 8efbc | male | गुरुचेला धुमधाम झगडा | गुरुचेला दुमदाम चगडा | 0.67 | 0.15 | oov_rare_vocabulary, phonetic_confusion |
+| 0d3af9342e | 056c7 | female | समर्थनमा स्थापित गरिदिए | समर्थमा स्थापित गरिदिए | 0.33 | 0.04 | oov_rare_vocabulary |
+| 3cd1567940 | e8f6f | male | ब्याज तिर्नुपर्ने हुन्छ | व्यहास दिन्नु पर्ने हुन्छ | 1.00 | 0.26 | noise_degradation, oov_rare_vocabulary, phonetic_confusion |
+| 794dd07876 | 76dab | female | रोजा राखेर राति | रोजा राखेर राती | 0.33 | 0.07 | oov_rare_vocabulary, phonetic_confusion |
+| 3542203038 | 1a81b | male | जोडी नै सम्विधानसभामा पुग्ने सात जोडीमध्ये एक हो अमृताको जोडी पनि। | जोडिनैसंविधानसभामा पुग्ने साथ जोडीमध्य एक हो अमृताको जोडी पनि | 0.55 | 0.12 | oov_rare_vocabulary, phonetic_confusion |
+| dc5bd13f97 | e8f6f | male | नयाँ नेपाल | नयाँ नेपाल | 0.00 | 0.00 | other |
+| dd07ccac9b | 056c7 | female | राजेश जी को | राजेश जीको | 0.67 | 0.09 | other |
+| 3b05885ecb | 76dab | female | बाजा समूहको एक | बाजा समूहको एक | 0.00 | 0.00 | other |
+| 069f1a5975 | 9d08c | male | धेरै हुन्छ | धेरै हुन्छ | 0.00 | 0.00 | other |
+| 084f8770e0 | 07179 | female | उमारिएको विभिन्न किसिमको | उमारिएको विभिन्न किसिमको | 0.00 | 0.00 | other |
+| deff9009e8 | da0cf | male | गुरिल्ला युद्धको लागि | गुरेल्ला युद्धको लागि | 0.33 | 0.05 | oov_rare_vocabulary, phonetic_confusion |
+| 0950a3e9a4 | 99866 | female | रन्मामैकोट तकसेरा हुकाम | रणमा मैकोट तक्सेरा हुकाम | 1.00 | 0.17 | noise_degradation, oov_rare_vocabulary, phonetic_confusion |
+| 7b1f434978 | 99866 | female | आइल्यान्ड तथा बेलायतदेखि | आइल्यान् तथा बेलाय देखि | 1.00 | 0.08 | noise_degradation, oov_rare_vocabulary, phonetic_confusion |
+| 06458f45c7 | 76dab | female | अञ्चलमा पर्ने काठमाडौँ | अञ्चलमा पर्नेकाठमाडौँ | 0.67 | 0.05 | oov_rare_vocabulary |
+| d2d29b1aea | 8efbc | male | रोकाको धारणा छ | रोकाको धारणा छ | 0.00 | 0.00 | other |
+| 068a5f9e4d | 07179 | female | साहित्य कृष्णप्रसाद पराजुलीद्वारा | साहित्य कृष्ण प्रसाध पराजुलीद्वारा | 0.67 | 0.06 | oov_rare_vocabulary, phonetic_confusion |
+| 3d23f3a053 | 056c7 | female | चेतन तत्त्व छ | चेतन तत्यो छ | 0.33 | 0.23 | oov_rare_vocabulary, phonetic_confusion |
+| 8f20c18a27 | 7f9c6 | female | नवप्रयोगहरूका कारण पनि | नवप्रयोगहरूका कारण पनि | 0.00 | 0.00 | other |
+| 8c693c9a97 | 7f9c6 | female | मान्छे चटकारे | मान्छि चट कार्य | 1.50 | 0.31 | noise_degradation, oov_rare_vocabulary, phonetic_confusion |
+| 8f61581d97 | e8f6f | male | मानिससँग पनि | मानिसाँग पनि | 0.50 | 0.08 | oov_rare_vocabulary, phonetic_confusion |
+| 8e144a8c27 | 99866 | female | चौतारी पृष्ठझैँ धेरै | चौतारी पृष्ठछैँ धेरै | 0.33 | 0.05 | oov_rare_vocabulary, phonetic_confusion |
+| 030127cb38 | 12d45 | female | उनीहरूको कब्जा भयो | उनीहरूको कब्जा भयौ | 0.33 | 0.06 | phonetic_confusion |
+| 8a16923bc6 | 7f9c6 | female | जातिका मनिसहरूको | जातिका मानिसहरूको | 0.50 | 0.06 | oov_rare_vocabulary |
+| 893dc361fd | 8efbc | male | गुरुङको घरमा गयौँ | गुरुङको घरमा गयौँ | 0.00 | 0.00 | other |
+| 0a15894a63 | 70e10 | female | आरम्भ भएको छ | अरम्व भएको छ | 0.33 | 0.17 | oov_rare_vocabulary, phonetic_confusion |
+| 0c0791cbc1 | 07179 | female | सहयोग गर्न पाउनमा | सहियोग गर्न पाउनमा | 0.33 | 0.06 | oov_rare_vocabulary |
+| d74c759f7d | efa9c | male | दिँदा पशु फाप | दिँदा पशु फाप | 0.00 | 0.00 | other |
+| 3a74cbb511 | 07179 | female | मैले सुरुका दिनहरूमा | महैले सुरुका दिनहरूमा | 0.33 | 0.05 | oov_rare_vocabulary |
+| 34760118f4 | 9d08c | male | वृक्ष यही हो | बृच्ष यहियो | 1.00 | 0.42 | noise_degradation, oov_rare_vocabulary, phonetic_confusion |
+| dde677080a | 70e10 | female | सूर्यले पृथ्वीको वरिपरि | सवर्यलले फृथ्ष गरीपुरि | 1.00 | 0.43 | noise_degradation, oov_rare_vocabulary, phonetic_confusion |
+| 002a8d9076 | 76dab | female | र एक अन्य फिल्मको | र एक अन्य फिल्मको | 0.00 | 0.00 | other |
+| 3db3210f8e | 5d5fe | male | उनलाई नचिन्नु | उनलाई नचि्नु | 0.50 | 0.08 | oov_rare_vocabulary |
+| d8451ec160 | 99866 | female | उत्तराधिकारी हुने | उत्तराधिकारी हुने | 0.00 | 0.00 | other |
+| 36e3b42ee0 | 76dab | female | दोलखा जिल्लाको | दोलखा जिल्लाको | 0.00 | 0.00 | other |
+| 81c40491fc | 76dab | female | जिल्लाको पाठामारीमा अवस्थित | जिल्लाको पाठामारीमा अवस्थित | 0.00 | 0.00 | other |
+| 35ff798136 | 70e10 | female | आग्नेय चट्टान संस्कृत शब्द | आग्ने चटटान संस्कृत शब्द | 0.50 | 0.08 | oov_rare_vocabulary |
+| 02443bae4d | 1a81b | male | उद्योग कार्यालय हो | उद्योग कार्यलाय हो | 0.33 | 0.11 | oov_rare_vocabulary |
+| 8ebb1af0c6 | 5d5fe | male | यो तथ्य इतिहासहरूमा | यो तथ्य हितिहासहरूमा | 0.33 | 0.11 | oov_rare_vocabulary, phonetic_confusion |
+| 8dae7b59b8 | 056c7 | female | भए जहाँ भोजनको | भएजहाँ भोजनको | 0.67 | 0.07 | oov_rare_vocabulary |
+| dfea2d149d | 99866 | female | गराएको मानिन्छ | गराएको मानिन्छ | 0.00 | 0.00 | other |
+| d34cb037a8 | e8f6f | male | प्रमुख थियो | प्रमुख थियो | 0.00 | 0.00 | other |
+| d1cfb4aabc | efa9c | male | रचना समेत गरे | रचना समेट गरे | 0.33 | 0.08 | oov_rare_vocabulary, phonetic_confusion |
+| 0e8987f3fc | 5d5fe | male | एतिहासिक प्रशासनिक महत्त्वको | ऐतिहासिक परासानिक महत्त्वको | 0.67 | 0.14 | oov_rare_vocabulary, phonetic_confusion |
+| 045f34cd5a | c46b5 | male | तपाईँ आफ्नो गाउँको | तपाईँ आफ्नो गाउँको | 0.00 | 0.00 | other |
+| 3b88864e56 | 5d5fe | male | राष्ट्रिय सेवाहरू | राष्ट्रिय सेवाहरू | 0.00 | 0.00 | other |
+| 361164a7ed | 70e10 | female | स्थलमध्ये पर्दछ | स्थनबध्ये पर्दछ | 0.50 | 0.13 | oov_rare_vocabulary, phonetic_confusion |
+| da5d1a8a89 | e8f6f | male | धनकुटाको कचिडेमा | धनकुटाको कचिडेमा | 0.00 | 0.00 | other |
+| 84efea6b34 | 76dab | female | अमेरिकी डलर छ | अमेरिकी डलर छ | 0.00 | 0.00 | other |
+| dfc8d36ad2 | efa9c | male | जहाँ दुखहरूको अग्नि | जहाँ दुखहरूको अग्नी | 0.33 | 0.05 | oov_rare_vocabulary, phonetic_confusion |
+| 8aa1a58431 | 12d45 | female | जरूरी छैन जुन | जररी छैन जुन | 0.33 | 0.08 | oov_rare_vocabulary |
+| 061f10be2e | 70e10 | female | आफ्नो क्षमता | आफ्नो क्षमता | 0.00 | 0.00 | other |
+| 8c3844dbb0 | efa9c | male | स्टारकिडको पहिलो राष्ट्रिय | स्टारकिडको पहिलो राष्ट्रिय | 0.00 | 0.00 | other |
+| 7921dc943c | efa9c | male | नामक गणितसम्बन्धी पुस्तक | नामक गणित सम्बन्धी पुस्तक | 0.67 | 0.04 | oov_rare_vocabulary |
+| d9aa2f3129 | efa9c | male | कारण एकै समयमा | कारण एकै समयमा | 0.00 | 0.00 | other |
+| 3f618a3c25 | 1a81b | male | जिल्ला पञ्चायतहरूमा निर्वाचित | जिल्ला पञचतहरूमा निर्वाचित | 0.33 | 0.10 | oov_rare_vocabulary |
+| 3161b117c2 | 1a81b | male | आउने बित्तिकै क्रिस्टल | आउने भित्तिकै कृष्टल | 0.67 | 0.23 | oov_rare_vocabulary, phonetic_confusion |
+| 7a01a55c6a | 8efbc | male | चरनयोग्य क्षेत्र मानिन्छन् | चरण योग्ञ क्षेत्र मानिन्छन् | 0.67 | 0.12 | oov_rare_vocabulary, phonetic_confusion |
+| 356db48125 | e8f6f | male | नोकियाको मोबाइल छ | नोकियाको मोबाइल छ | 0.00 | 0.00 | other |
+| d61b84ec00 | 7f9c6 | female | माध्यमिक विद्यालयको | माध्यमिक विद्यालयको | 0.00 | 0.00 | other |
+| d0940523bb | 8efbc | male | राम्रो व्यक्ति बन्नेमा | राम्रो व्यक्ति बन्नेमा | 0.00 | 0.00 | other |
+| 7752c1a8fa | 99866 | female | होल्टका भावनाहरू र सन् | होल्डका भावनाहरू र सन् | 0.25 | 0.05 | oov_rare_vocabulary, phonetic_confusion |
+| 3295ade169 | 76dab | female | परयाहरूको संजालभित्र | परयाहरूको सञ्चालभित्र | 0.50 | 0.15 | oov_rare_vocabulary, phonetic_confusion |
+| 8921260225 | f07db | female | मनुको हो | मनुको हो | 0.00 | 0.00 | other |
+| d443c84109 | 70e10 | female | क्रान्तिकारी वाममोर्चाको | तन्थिकारी बाम वर्षको | 1.50 | 0.42 | noise_degradation, oov_rare_vocabulary, phonetic_confusion |
+| 3f8bcfc6b9 | 99866 | female | एक अनुमान छ | एक अनुमान छ | 0.00 | 0.00 | other |
+| d72cfed93c | c46b5 | male | साउथ अस्ट्रेलियाली चलचित्र | साउथ अस्ट्रेलयाली चलचित्र | 0.33 | 0.04 | oov_rare_vocabulary |
+| 73fde60c68 | e8f6f | male | भिक्षा दिनका निम्ति | भृक्षा दिनका निम्ति | 0.33 | 0.05 | oov_rare_vocabulary, phonetic_confusion |
+| d20b2fea89 | 056c7 | female | निसी नेपालको | निशी नेपालको | 0.50 | 0.08 | oov_rare_vocabulary, phonetic_confusion |
+| 7f3e582176 | 8efbc | male | तिनै हजुरबुबाको आडमा | तिनै हजुर बुभाको आढमा | 1.00 | 0.15 | noise_degradation, oov_rare_vocabulary, phonetic_confusion |
+| 3270c486a1 | f07db | female | गरेको तपाईँको योगदान | गरेको तपाईँको योगदान | 0.00 | 0.00 | other |
+| 0e8819f2e1 | da0cf | male | बाँकी नै छ | बाकी नै छ | 0.33 | 0.10 | oov_rare_vocabulary |
+| dc1c739b7d | f07db | female | धर्म सम्प्रदायहरू जस्तै | धर्म समप्रदायहरू जस्तै | 0.33 | 0.04 | oov_rare_vocabulary |
+| 88f3036a36 | 99866 | female | अङ्ग्रेजी महिना हो | अङ्ग्रेजी महिना हो | 0.00 | 0.00 | other |
+| 80d51d2e79 | da0cf | male | बेलायती प्रभावमा कमी | बेलायती प्रभावमा कमी | 0.00 | 0.00 | other |
+| 79ecb6ff25 | 1a81b | male | किम कुलिग | किम कुलिकक | 0.50 | 0.22 | oov_rare_vocabulary, phonetic_confusion |
+| d54cb86f18 | f07db | female | बिनायो तथा हारी | बि्ना ययो तथा हाली | 1.00 | 0.27 | noise_degradation, oov_rare_vocabulary, phonetic_confusion |
+| 0aead87b58 | 70e10 | female | ढल्कनासाथ देवताहरूको | ढल्कन सत्देवतहरूको | 1.00 | 0.25 | noise_degradation, oov_rare_vocabulary, phonetic_confusion |
+| 0d23be1ca8 | 70e10 | female | यस अवसरमा | यस औसरमा | 0.50 | 0.22 | oov_rare_vocabulary, phonetic_confusion |
+| df0f134997 | c46b5 | male | ९ गते सिरहा | [UNK]ौ गतेशीरहा | 1.00 | 0.82 | noise_degradation, oov_rare_vocabulary, phonetic_confusion |
+| 01af564842 | 8efbc | male | प्वाँख मैले | पवाँख मैले | 0.50 | 0.09 | oov_rare_vocabulary |
+| 8f268b2d42 | f07db | female | हुन स्वीकार | हुन स्विकार | 0.50 | 0.09 | oov_rare_vocabulary, phonetic_confusion |
+| 0eace1a98b | 056c7 | female | पढाइ प्रतिको उहाँको | पढाइपर्तिको उहाँको | 0.67 | 0.16 | oov_rare_vocabulary, phonetic_confusion |
+| 7635799596 | 12d45 | female | मात्र रिडाइरेक्ट हुन्छ | मात्र रिडाइरेक्ट हुन्छ | 0.00 | 0.00 | other |
+| 3dcd687720 | efa9c | male | बिमलादेवीको सानो चिटिक्क | बिमलादेवीको सानु चिटिक्क | 0.33 | 0.04 | oov_rare_vocabulary, phonetic_confusion |
+| 81f4c30a2c | 99866 | female | कि खतरा | कि खतरा | 0.00 | 0.00 | other |
+| 725c6c0064 | e8f6f | male | काम गर्दागर्दै वहाँ | काम गर्दा गर्दै उह | 1.00 | 0.21 | noise_degradation, oov_rare_vocabulary, phonetic_confusion |
+| dd26100ea3 | 12d45 | female | नाम जे राख्नुहोस् | नामजे राख्नु होस् | 1.00 | 0.12 | noise_degradation, oov_rare_vocabulary |
+| 0d95694cfe | efa9c | male | उपल्लो अर्खला नवलपरासी | उपङलु अर्खला नबल परास | 1.00 | 0.27 | noise_degradation, oov_rare_vocabulary, phonetic_confusion |
+| 0230c928e0 | f07db | female | गङ्गालाल श्रेष्ठलाई गोली | गङ्गलाल श्ेष्ठलाई बोली | 1.00 | 0.12 | noise_degradation, oov_rare_vocabulary, phonetic_confusion |
+| 770279b652 | 99866 | female | मित्रता निकै | मित्रता निकै | 0.00 | 0.00 | other |
+| 8a8b3a56d5 | 7f9c6 | female | ठूलो यज्ञ गरे | ठुलो एज्य गरे | 0.67 | 0.23 | oov_rare_vocabulary, phonetic_confusion |
+| 7d7bdec74f | 5d5fe | male | नेपालमा राणाहरूले | नेपालमा राँडाहरूले | 0.50 | 0.12 | oov_rare_vocabulary, phonetic_confusion |
+| 86755b50ef | 5d5fe | male | सिरलिङ्गे लिएर विभिन्न | सिरलिङ्गे लिएर विभिन्न | 0.00 | 0.00 | other |
+| d4b24720b7 | 76dab | female | पराग एउटा नेपाली | पराग एउटा नेपाली | 0.00 | 0.00 | other |
+| 378bb42091 | 8efbc | male | मातृभाषा वा निजहरूको | मात् भाषा वा निजहरूको | 0.67 | 0.10 | oov_rare_vocabulary, phonetic_confusion |
+| 08606b64cc | 8efbc | male | पिर मर्का गुनासाहरू | पीरमरका गुनासाहरू | 0.67 | 0.16 | oov_rare_vocabulary, phonetic_confusion |
+| 7b9949c9e6 | 76dab | female | विजय | विजय | 0.00 | 0.00 | other |
+| 382856c61f | 12d45 | female | मेरो मुखबाट एउटै | मेरो मुखबाटै एउटै | 0.33 | 0.06 | oov_rare_vocabulary |
+| 84b58e6223 | 70e10 | female | स्थानीय उद्योगका लागि | स्थानी उद्वोकय लागि | 0.67 | 0.19 | oov_rare_vocabulary, phonetic_confusion |
+| 0c2a6969f8 | 07179 | female | यसलाई अङ्ग्रेजीमा रिभर | यसलाई अङ्ग्रेजीमा रिबर | 0.33 | 0.05 | oov_rare_vocabulary, phonetic_confusion |
+| 0139dc5b13 | 056c7 | female | बनाएर आधुनिक गीत | बनाएर आधुनिक गीत | 0.00 | 0.00 | other |
+| 8a24eda5e8 | da0cf | male | पार्टीको सहयोगको लागि | पाटीको सहयोगको लागि | 0.33 | 0.10 | oov_rare_vocabulary |
+| 0176bd214c | 9d08c | male | मुगल शासकुन्ले | मुगल शासककुनले | 0.50 | 0.14 | oov_rare_vocabulary |
+| 3a26f35fc1 | 76dab | female | जापानमा बनाइएको एक | जापानमा बनाइएको एक | 0.00 | 0.00 | other |
+| 05ec166b72 | 5d5fe | male | नेपालको उपाध्यक्ष साथै | नेपालको उपादक्ष साथै | 0.33 | 0.14 | oov_rare_vocabulary, phonetic_confusion |
+| 7d68ea40c7 | 70e10 | female | हजार ८०० मिटरदेखि | हज[UNK] [UNK][UNK]मिटरदेखि | 1.00 | 0.88 | noise_degradation, oov_rare_vocabulary, phonetic_confusion |
+| 8ab6e41132 | 5d5fe | male | कसैले कुनै पनि | कसैले कुनै पनि | 0.00 | 0.00 | other |
+| 78c9e55641 | efa9c | male | जाने इच्छालाई समाप्त | जाने इच्छालाई समात | 0.33 | 0.10 | oov_rare_vocabulary |
+| 7b86a1f14e | 1a81b | male | मई १९७४ मा | मै [UNK][UNK][UNK][UNK]मा | 1.00 | 2.10 | noise_degradation, oov_rare_vocabulary, phonetic_confusion |
+| ddb44bb107 | 8efbc | male | भक्तपुरपछिको ठूलो प्राचीन | भक्तपुरपछिको ठुलो प्राचीन | 0.33 | 0.04 | oov_rare_vocabulary, phonetic_confusion |
+| 3cb1356eec | 8efbc | male | हो जहाँबाट हामीले | हो जहाँबाट हामीले | 0.00 | 0.00 | other |
+| dfaf3cfaf5 | e8f6f | male | परिभाषाले स्पष्ट पारेको छ | परिवाषाले स्पस्त परादेको छ | 0.75 | 0.20 | oov_rare_vocabulary, phonetic_confusion |
+| d0480f7916 | 056c7 | female | ठोस ज्यामितिका सन्दर्भमा | ठोस ज्यामितिकका सन्दर्वमा | 0.67 | 0.08 | oov_rare_vocabulary, phonetic_confusion |
+| 0584cc526e | da0cf | male | छतौल नेपालको जनकपुर | छतौल नेपालका जनकपुर | 0.33 | 0.05 | oov_rare_vocabulary, phonetic_confusion |
+| 8b50556041 | f07db | female | उपन्यास कृष्णहरि बराल | उपन्यास कृष्णहरि बराल | 0.00 | 0.00 | other |
+| 0e8a19bda9 | 8efbc | male | भेडा परेवा हाँस | बेडा परेवा हास | 0.67 | 0.13 | oov_rare_vocabulary, phonetic_confusion |
+| 75acd88ff6 | 056c7 | female | परेको र आफू बालकै | परेको र आफूवालककै | 0.50 | 0.18 | oov_rare_vocabulary, phonetic_confusion |
+| 0a5ad7b85e | c46b5 | male | सबैले एकमतले स्वीकारेको | सबैले एकमतले स्विकार्यको | 0.33 | 0.13 | oov_rare_vocabulary, phonetic_confusion |
+| 77db4a7462 | 5d5fe | male | तर पनि त्यस | तर पनि त्यस | 0.00 | 0.00 | other |
+| d8814e3d67 | 9d08c | male | पवित्र मानिन्छ | पवित् र मानिन्छ | 1.00 | 0.07 | noise_degradation, oov_rare_vocabulary |
+| 06330c8dde | 99866 | female | यस भवनको निर्माणले | यस भवनको निर्माणले | 0.00 | 0.00 | other |
+| 8f24eac8cf | 1a81b | male | तपाईँले बिना सन्दर्भका | तपाईँले विनास अन्दर्वका | 0.67 | 0.18 | oov_rare_vocabulary, phonetic_confusion |
+| d7d0184f51 | efa9c | male | विष तयार गर्छ | बस्तयार वर्ष | 1.00 | 0.46 | noise_degradation, oov_rare_vocabulary, phonetic_confusion |
+| 7553b80c6b | 5d5fe | male | शाहको नामबाट तत्कालीन | शाहको नामबाट तत्कालीन | 0.00 | 0.00 | other |
+| 09608a650b | 056c7 | female | मुद्रा जनसङ्ख्या क्षेत्रफल | मुद्रजनसङ्ख्या क्षेत्रफल | 0.67 | 0.08 | oov_rare_vocabulary |
+| 3cf2fad57c | 8efbc | male | पुरस्कार पाउनुभएको थियो | पुरस्कार पाउनुभएको थियो | 0.00 | 0.00 | other |
+| 8d4a047584 | efa9c | male | विद्यालय बनेको हो | विद्यालय बौनेको हो | 0.33 | 0.06 | oov_rare_vocabulary |
