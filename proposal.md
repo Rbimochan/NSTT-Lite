@@ -1,9 +1,26 @@
-# Project Proposal — NSTT-Lite: Auditing and Repairing a Published Nepali ASR Model
+![](appendix_screenshots/softwarica_coventry_logo.png){width="6.0in"}
+
+<br><br><br>
+
+# Project Proposal
+
+### NSTT-Lite: Auditing and Repairing a Published Nepali ASR Model
+
+<br><br>
 
 **Module:** ST7088CEM — Artificial Neural Networks
-**Student:** Bimochan Raj Kunwar — Coventry ID: 17108924
+
+**Student:** Bimochan Raj Kunwar
+
+**Coventry ID:** 17108924
+
 **Programme:** MSc7-S2
+
 **Email:** 250594@softwarica.edu.np
+
+```{=openxml}
+<w:p><w:r><w:br w:type="page"/></w:r></w:p>
+```
 
 ## Problem
 

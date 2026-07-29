@@ -1,10 +1,59 @@
-# Auditing and Repairing a Published Nepali ASR Model: A Speaker-Diversity Case Study on XLS-R
+![](appendix_screenshots/softwarica_coventry_logo.png){width="6.0in"}
 
-*Structure follows the department's report template; all content below is real, measured output from this project's own pipeline runs — no placeholder values.*
+<br><br><br>
+
+# Auditing and Repairing a Published Nepali ASR Model
+
+### A Speaker-Diversity Case Study on XLS-R
+
+<br><br>
 
 **Module:** ST7088CEM — Artificial Neural Networks
 
-**Student:** Bimochan Raj Kunwar — Coventry ID: 17108924, MSc7-S2
+**Student:** Bimochan Raj Kunwar
+
+**Coventry ID:** 17108924
+
+**Programme:** MSc7-S2
+
+**Email:** 250594@softwarica.edu.np
+
+```{=openxml}
+<w:p><w:r><w:br w:type="page"/></w:r></w:p>
+```
+
+## Table of Contents
+
+| Section | Page |
+|:---|---:|
+| Abstract | 3 |
+| 1. Introduction | 3 |
+| 2. Background / Related Work | 4 |
+| 3. Problem / Tasks / Method | 5 |
+| &nbsp;&nbsp;&nbsp;3.1 Problem statement | 5 |
+| &nbsp;&nbsp;&nbsp;3.2 System Architecture | 5 |
+| &nbsp;&nbsp;&nbsp;3.3 Dataset | 6 |
+| &nbsp;&nbsp;&nbsp;3.4 Preprocessing | 6 |
+| &nbsp;&nbsp;&nbsp;3.5 Task 1 Method — Benchmark Audit | 6 |
+| &nbsp;&nbsp;&nbsp;3.6 Task 2 Method — Fine-tuning Repair | 6 |
+| 4. Experimental Section | 7 |
+| &nbsp;&nbsp;&nbsp;4.1 Baseline audit | 7 |
+| &nbsp;&nbsp;&nbsp;4.2 Fine-tuned repair results | 8 |
+| &nbsp;&nbsp;&nbsp;4.3 Speaker-leakage ablation | 8 |
+| &nbsp;&nbsp;&nbsp;4.4 Error analysis | 9 |
+| &nbsp;&nbsp;&nbsp;4.5 Deployment / efficiency benchmark | 9 |
+| 5. Discussion of Findings | 10 |
+| 6. Conclusion | 10 |
+| References | 11 |
+| Appendices | 11 |
+| &nbsp;&nbsp;&nbsp;Appendix A — Project Proposal (Verbatim) | 12 |
+| &nbsp;&nbsp;&nbsp;Appendix B — Full Code Listing | 13 |
+| &nbsp;&nbsp;&nbsp;Appendix C — Evidence and Reproducibility Artifacts | 54 |
+| &nbsp;&nbsp;&nbsp;Appendix D — Extended Results Tables | 58 |
+
+```{=openxml}
+<w:p><w:r><w:br w:type="page"/></w:r></w:p>
+```
 
 ## Abstract
 
