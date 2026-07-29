@@ -1963,9 +1963,23 @@ datasets: 3.2.0
 mlflow: 2.20.1
 ```
 
+![Terminal output of the environment info script](appendix_screenshots/07_environment_info.png)
+
 ## C.2 MLflow experiment tracking
 
-Six MLflow experiments were logged over the course of this project (local `mlruns/` store): `phase4-audit`, `phase6-finetune`, `phase7-generalization`, `phase8-efficiency`, `phase9-leaky-ablation`, plus the default experiment used during early smoke testing. Each run logs its parameters, metrics, and (where applicable) example artifacts. [SCREENSHOT: MLflow experiments list] [SCREENSHOT: phase6-finetune run overview, Duration 7.7h, Status Finished] [SCREENSHOT: eval_wer metric curve across epochs]
+Six MLflow experiments were logged over the course of this project (local `mlruns/` store): `phase4-audit`, `phase6-finetune`, `phase7-generalization`, `phase8-efficiency`, `phase9-leaky-ablation`, plus the default experiment used during early smoke testing. Each run logs its parameters, metrics, and (where applicable) example artifacts.
+
+![MLflow experiments list](appendix_screenshots/01_experiments_list.png)
+
+![phase6-finetune experiment: all logged runs, including the 7.7h full training run](appendix_screenshots/02_phase6_runs_list.png)
+
+![Run overview for the full training run (Run ID bd518b21..., Duration 7.7h, Status Finished, Source run_xlsr_train.py)](appendix_screenshots/03_run_overview_7.7h.png)
+
+![Model metrics: eval_loss, grad_norm, loss, epoch, learning_rate, train_runtime (27,626.68s ≈ 7.68h)](appendix_screenshots/04_model_metrics_top.png)
+
+![Model metrics: eval_wer curve (0.7098 → 0.6883 across the last four logged epochs) and train_loss (0.50)](appendix_screenshots/05_model_metrics_eval_wer.png)
+
+![Model metrics continued: total_flos, eval_steps_per_second, eval_cer, train throughput](appendix_screenshots/06_model_metrics_bottom.png)
 
 ## C.3 Key result files
 
