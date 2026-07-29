@@ -20,7 +20,7 @@ claim does not survive, can the same model be repaired by fine-tuning it on
 speaker-diverse data, and at what cost?
 
 The answer to both, established empirically in this report, is: the claim
-does not generalize (WER degrades from 4.91% in-domain to 62.30%
+does not generalise (WER degrades from 4.91% in-domain to 62.30%
 out-of-domain, a measurement independently confirming the audited 5.97%
 figure is representative only of its narrow training distribution), and
 fine-tuning on a 15-hour, 160-speaker, speaker-disjoint subset substantially
@@ -168,7 +168,7 @@ Every WER/CER comparison in this report uses the same procedure and the same
 across sections are directly comparable: a fixed slice of OpenSLR-43 for
 in-domain measurement, and a seeded shuffle of OpenSLR-54's speaker-disjoint
 test split for out-of-domain measurement. (OpenSLR-54's test manifest is
-speaker-ordered on disk; a naive unsuffled slice was found early in this
+speaker-ordered on disk; a naive unshuffled slice was found early in this
 project to land on a single-gender-pseudo-label subset of speakers by
 chance — the seeded shuffle exists specifically to avoid that failure mode
 recurring.) WER and CER are computed via `jiwer` after identical text
@@ -187,7 +187,7 @@ reproducible from the commit history there.
 
 ## 6. Results
 
-### 6.1 The audit: does the published claim generalize?
+### 6.1 The audit: does the published claim generalise?
 
 | Evaluation | WER | CER |
 |---|---|---|
