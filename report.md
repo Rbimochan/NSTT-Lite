@@ -26,30 +26,30 @@
 
 | Section | Page |
 |:---|---:|
-| Abstract | 3 |
+| Abstract / Keywords / Project Links | 3 |
 | 1. Introduction | 3 |
 | 2. Background / Related Work | 4 |
 | 3. Problem / Tasks / Method | 5 |
 | &nbsp;&nbsp;&nbsp;3.1 Problem statement | 5 |
 | &nbsp;&nbsp;&nbsp;3.2 System Architecture | 5 |
-| &nbsp;&nbsp;&nbsp;3.3 Dataset | 6 |
-| &nbsp;&nbsp;&nbsp;3.4 Preprocessing | 6 |
-| &nbsp;&nbsp;&nbsp;3.5 Task 1 Method — Benchmark Audit | 6 |
-| &nbsp;&nbsp;&nbsp;3.6 Task 2 Method — Fine-tuning Repair | 6 |
-| 4. Experimental Section | 7 |
-| &nbsp;&nbsp;&nbsp;4.1 Baseline audit | 7 |
-| &nbsp;&nbsp;&nbsp;4.2 Fine-tuned repair results | 8 |
-| &nbsp;&nbsp;&nbsp;4.3 Speaker-leakage ablation | 8 |
-| &nbsp;&nbsp;&nbsp;4.4 Error analysis | 9 |
-| &nbsp;&nbsp;&nbsp;4.5 Deployment / efficiency benchmark | 9 |
-| 5. Discussion of Findings | 10 |
-| 6. Conclusion | 10 |
-| References | 11 |
-| Appendices | 11 |
-| &nbsp;&nbsp;&nbsp;Appendix A — Project Proposal (Verbatim) | 12 |
-| &nbsp;&nbsp;&nbsp;Appendix B — Full Code Listing | 13 |
-| &nbsp;&nbsp;&nbsp;Appendix C — Evidence and Reproducibility Artifacts | 54 |
-| &nbsp;&nbsp;&nbsp;Appendix D — Extended Results Tables | 58 |
+| &nbsp;&nbsp;&nbsp;3.3 Dataset | 7 |
+| &nbsp;&nbsp;&nbsp;3.4 Preprocessing | 8 |
+| &nbsp;&nbsp;&nbsp;3.5 Task 1 Method — Benchmark Audit | 8 |
+| &nbsp;&nbsp;&nbsp;3.6 Task 2 Method — Fine-tuning Repair | 8 |
+| 4. Experimental Section | 9 |
+| &nbsp;&nbsp;&nbsp;4.1 Baseline audit | 9 |
+| &nbsp;&nbsp;&nbsp;4.2 Fine-tuned repair results | 9 |
+| &nbsp;&nbsp;&nbsp;4.3 Speaker-leakage ablation | 10 |
+| &nbsp;&nbsp;&nbsp;4.4 Error analysis | 10 |
+| &nbsp;&nbsp;&nbsp;4.5 Deployment / efficiency benchmark | 11 |
+| 5. Discussion of Findings | 11 |
+| 6. Conclusion | 12 |
+| References | 12 |
+| Appendices | 13 |
+| &nbsp;&nbsp;&nbsp;Appendix A — Project Proposal (Verbatim) | 14 |
+| &nbsp;&nbsp;&nbsp;Appendix B — Full Code Listing (representative subset) | 16 |
+| &nbsp;&nbsp;&nbsp;Appendix C — Evidence and Reproducibility Artifacts | 33 |
+| &nbsp;&nbsp;&nbsp;Appendix D — Extended Results Tables | 35 |
 
 ```{=openxml}
 <w:p><w:r><w:br w:type="page"/></w:r></w:p>
@@ -58,6 +58,14 @@
 ## Abstract
 
 Nepali automatic speech recognition (ASR) benchmarks are frequently measured on narrow, low-diversity corpora and then cited as evidence of general-purpose transcription quality. This project audits one such claim: `gagan3012/wav2vec2-xlsr-nepali`, a published Hugging Face XLS-R (wav2vec2) checkpoint that self-reports 5.97% word error rate (WER) on OpenSLR-43, its own single-speaker training corpus. Task 1 reproduces that figure in-domain (4.91% WER, confirming the claim) and measures the same checkpoint zero-shot on a different, multi-speaker corpus, OpenSLR-54 (62.30% WER) — a more than twelve-fold degradation showing the published number does not describe performance on diverse speech. Task 2 fine-tunes the same checkpoint on a 15-hour, 160-speaker, speaker-disjoint OpenSLR-54 subset to repair that gap: out-of-domain WER falls to 38.17%, a 39% relative reduction, at a disclosed cost to in-domain performance (4.91% → 16.40%). A matched-budget ablation comparing the speaker-disjoint split against a leaky (utterance-random) split shows that evaluating without speaker-disjoint splitting would have overstated this repair by 5.62 percentage points (32.55% vs. 38.17% WER) — a methodological finding as important as the headline result. Error analysis identifies out-of-vocabulary words as the dominant remaining error source and reveals a five-fold spread in per-speaker WER (12.5%–63.6%) that the aggregate metric conceals. Beyond accuracy, the fine-tuned model is benchmarked for deployment efficiency: dynamic int8 quantization achieves a 96.0% model size reduction but is measured to be 1.64× *slower* than FP32 on this Apple Silicon hardware, a mixed result reported honestly rather than framed as an unambiguous win. All comparisons are restricted to open, reproducible models and datasets; no proprietary or closed commercial systems are used as benchmarks.
+
+**Keywords:** Nepali Automatic Speech Recognition, XLS-R, wav2vec2, CTC Fine-tuning, Speaker-Disjoint Evaluation, Speaker-Leakage Ablation, Low-Resource Speech Recognition, Model Quantization, MLflow, Benchmark Generalization Gap
+
+## Project Links
+
+**GitHub Repository:** [github.com/Rbimochan/NSTT-Lite](https://github.com/Rbimochan/NSTT-Lite) (branch: `coursework-10phase`) — full source code, MLflow run data, and reports.
+
+**YouTube Presentation:** *[link to be added — video not yet recorded/published]*
 
 ## 1. Introduction
 
@@ -89,9 +97,13 @@ The remainder of this report proceeds as follows: Section 2 situates this work a
 
 ### 3.2 System Architecture
 
-Figure 1 shows the full experimental pipeline connecting the two tasks. The audited checkpoint is the single starting point for both: Task 1 evaluates it as-is (zero-shot) on both corpora to establish the audit finding; Task 2 fine-tunes the same checkpoint's transformer encoder and CTC head (with the convolutional feature encoder frozen) on speaker-diverse data. Both tasks' outputs feed a shared generalisation re-evaluation, a matched-budget speaker-leakage ablation, error analysis, and an efficiency benchmark — the same measurement methodology applied consistently across every stage so results are directly comparable.
+Figure 1 shows the internal architecture of the audited model itself — XLS-R (wav2vec2) — rather than only the surrounding experimental process, so it is clear exactly which layers exist and which of them are actually updated during fine-tuning. Raw audio passes through a 7-block convolutional feature encoder (50 Hz latent frame rate), then a 24-layer transformer encoder with relative positional convolutional embeddings, then a linear projection to a per-frame vocabulary distribution, decoded greedily under the CTC objective into Devanagari text. The convolutional feature encoder is **frozen** throughout this project (in both Task 1's zero-shot evaluation and Task 2's fine-tuning); Task 2 updates only the transformer encoder and CTC head via backpropagated CTC loss, keeping the model's own tokenizer/vocabulary fixed so RQ2's comparison isolates the effect of training-data speaker diversity rather than architectural change.
 
-![Figure 1. System / experimental pipeline: from the audited checkpoint through both tasks to the shared downstream analyses.](appendix_screenshots/figure1_pipeline.png)
+![Figure 1. XLS-R (wav2vec2) architecture, showing the CNN feature encoder, transformer encoder, and CTC head, with frozen vs. fine-tuned components marked.](appendix_screenshots/figure1_architecture.png)
+
+Figure 2 shows the surrounding experimental pipeline that connects the two tasks to the shared downstream analyses. The audited checkpoint is the single starting point for both: Task 1 evaluates it as-is (zero-shot) on both corpora to establish the audit finding; Task 2 fine-tunes the same checkpoint as described above. Both tasks' outputs feed a shared generalisation re-evaluation, a matched-budget speaker-leakage ablation, error analysis, and an efficiency benchmark — the same measurement methodology applied consistently across every stage so results are directly comparable.
+
+![Figure 2. Experimental pipeline: from the audited checkpoint through both tasks to the shared downstream analyses.](appendix_screenshots/figure1_pipeline.png)
 
 ### 3.3 Dataset
 
