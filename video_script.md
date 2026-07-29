@@ -5,7 +5,7 @@
 **Student:** Bimochan Raj Kunwar — Coventry ID: 17108924
 **Target length:** ~7–9 minutes
 
-**Note:** the video itself has not been recorded yet — this document is the script/storyboard to record from. Once recorded and uploaded, the YouTube link should replace the placeholder in the report's "Project Links" section.
+**Published:** [youtu.be/WNg52rptkoU](https://youtu.be/WNg52rptkoU)
 
 ---
 
@@ -90,4 +90,4 @@ The important part for this project: I kept the CNN feature encoder **frozen** t
 - Record screen capture of the MLflow UI (Appendix C screenshots) briefly during Scene 4–5 if time allows, to visually back up the "tracked with MLflow" claim.
 - Keep each on-screen table visible for at least 8–10 seconds before cutting — these are the evidentiary core of the video.
 - Optional B-roll: a few lines of terminal output from `run_efficiency_benchmark.py` for Scene 7.
-- After recording and uploading, replace the placeholder in `report.md`'s "Project Links" section (and this file's header note) with the real YouTube URL.
+- Video published; the report's "Project Links" section now links to it directly.

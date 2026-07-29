@@ -65,7 +65,7 @@ Nepali automatic speech recognition (ASR) benchmarks are frequently measured on 
 
 **GitHub Repository:** [github.com/Rbimochan/NSTT-Lite](https://github.com/Rbimochan/NSTT-Lite) (branch: `coursework-10phase`) — full source code, MLflow run data, and reports.
 
-**YouTube Presentation:** *[link to be added — video not yet recorded/published]*
+**YouTube Presentation:** [youtu.be/WNg52rptkoU](https://youtu.be/WNg52rptkoU)
 
 ## 1. Introduction
 
