@@ -47,9 +47,9 @@
 | References | 12 |
 | Appendices | 13 |
 | &nbsp;&nbsp;&nbsp;Appendix A — Project Proposal (Verbatim) | 14 |
-| &nbsp;&nbsp;&nbsp;Appendix B — Full Code Listing (representative subset) | 16 |
-| &nbsp;&nbsp;&nbsp;Appendix C — Evidence and Reproducibility Artifacts | 33 |
-| &nbsp;&nbsp;&nbsp;Appendix D — Extended Results Tables | 35 |
+| &nbsp;&nbsp;&nbsp;Appendix B — Full Code Listing | 16 |
+| &nbsp;&nbsp;&nbsp;Appendix C — Evidence and Reproducibility Artifacts | 57 |
+| &nbsp;&nbsp;&nbsp;Appendix D — Extended Results Tables | 60 |
 
 ```{=openxml}
 <w:p><w:r><w:br w:type="page"/></w:r></w:p>
