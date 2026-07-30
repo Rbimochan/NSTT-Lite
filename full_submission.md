@@ -43,13 +43,14 @@
 | &nbsp;&nbsp;&nbsp;4.4 Error analysis | 10 |
 | &nbsp;&nbsp;&nbsp;4.5 Deployment / efficiency benchmark | 11 |
 | 5. Discussion of Findings | 11 |
-| 6. Conclusion | 12 |
-| References | 12 |
+| 6. Conclusion | 13 |
+| References | 13 |
 | Appendices | 13 |
-| &nbsp;&nbsp;&nbsp;Appendix A — Project Proposal (Verbatim) | 14 |
-| &nbsp;&nbsp;&nbsp;Appendix B — Full Code Listing | 16 |
-| &nbsp;&nbsp;&nbsp;Appendix C — Evidence and Reproducibility Artifacts | 57 |
-| &nbsp;&nbsp;&nbsp;Appendix D — Extended Results Tables | 60 |
+| &nbsp;&nbsp;&nbsp;Appendix A — Project Proposal (Verbatim) | 15 |
+| &nbsp;&nbsp;&nbsp;Appendix B — Full Code Listing (incl. B.0 Core Architecture) | 17 |
+| &nbsp;&nbsp;&nbsp;Appendix C — Evidence and Reproducibility Artifacts | 61 |
+| &nbsp;&nbsp;&nbsp;Appendix D — Extended Results Tables | 64 |
+| &nbsp;&nbsp;&nbsp;Appendix E — Project Links and Data Sources | 89 |
 
 ```{=openxml}
 <w:p><w:r><w:br w:type="page"/></w:r></w:p>
@@ -100,6 +101,8 @@ The remainder of this report proceeds as follows: Section 2 situates this work a
 Figure 1 shows the internal architecture of the audited model itself — XLS-R (wav2vec2) — rather than only the surrounding experimental process, so it is clear exactly which layers exist and which of them are actually updated during fine-tuning. Raw audio passes through a 7-block convolutional feature encoder (50 Hz latent frame rate), then a 24-layer transformer encoder with relative positional convolutional embeddings, then a linear projection to a per-frame vocabulary distribution, decoded greedily under the CTC objective into Devanagari text. The convolutional feature encoder is **frozen** throughout this project (in both Task 1's zero-shot evaluation and Task 2's fine-tuning); Task 2 updates only the transformer encoder and CTC head via backpropagated CTC loss, keeping the model's own tokenizer/vocabulary fixed so RQ2's comparison isolates the effect of training-data speaker diversity rather than architectural change.
 
 ![Figure 1. XLS-R (wav2vec2) architecture, showing the CNN feature encoder, transformer encoder, and CTC head, with frozen vs. fine-tuned components marked.](appendix_screenshots/figure1_architecture.png)
+
+Appendix B.0 additionally shows this same architecture redrawn as a standard node-link diagram (input layer → multiple hidden layers → output layer), alongside the exact code that implements the frozen/fine-tuned split shown above.
 
 Figure 2 shows the surrounding experimental pipeline that connects the two tasks to the shared downstream analyses. The audited checkpoint is the single starting point for both: Task 1 evaluates it as-is (zero-shot) on both corpora to establish the audit finding; Task 2 fine-tunes the same checkpoint as described above. Both tasks' outputs feed a shared generalisation re-evaluation, a matched-budget speaker-leakage ablation, error analysis, and an efficiency benchmark — the same measurement methodology applied consistently across every stage so results are directly comparable.
 
@@ -209,9 +212,17 @@ Quantization delivers a 96.0% size reduction at negligible accuracy cost (+0.68 
 
 This work relates back to the motivating concern in Section 1: published low-resource ASR numbers, including outside this specific project, should be read with the training corpus's speaker diversity in mind, not taken at face value.
 
+```{=openxml}
+<w:p><w:r><w:br w:type="page"/></w:r></w:p>
+```
+
 ## 6. Conclusion
 
-This project set out to answer whether a specific published Nepali ASR benchmark claim (5.97% WER) survives contact with speaker-diverse speech (RQ1), and whether the same model can be repaired if not (RQ2). It does not survive: the same checkpoint's WER rises to 62.30% on a different, multi-speaker corpus. Fine-tuning that checkpoint on a 15-hour, speaker-disjoint, 160-speaker subset repairs a substantial share of that gap (to 38.17% WER), at a disclosed cost to the model's original narrow-domain sharpness, and a matched-budget ablation confirms this improvement is genuine rather than a leakage artefact. The contribution of this project is an open, reproducible Nepali ASR audit-and-repair case study with an accompanying efficiency benchmark — not a claim of new state-of-the-art performance. Future work would extend the fine-tuning corpus beyond 15 hours, replace the F0-pitch pseudo-label with verified demographic metadata should a real bias analysis be required, and test on conversational or code-switched Nepali speech rather than read speech alone.
+This project delivered two things: an audit that shows a published Nepali ASR benchmark figure does not hold on diverse speech, and a repair that closes a substantial share of that gap while being honest about its cost and limits. Headline numbers: 5.97% (published) → 4.91%/62.30% (measured, in-/out-of-domain) → 38.17% (out-of-domain, after fine-tuning), with the speaker-leakage ablation confirming that final number is genuine rather than inflated by evaluation leakage.
+
+**Contribution.** The project is framed deliberately as an open, reproducible audit-and-repair case study, not a claim of new state-of-the-art Nepali ASR performance. Its two artefacts of independent value beyond the headline numbers are: (i) the speaker-leakage ablation itself, as a reusable methodological check any low-resource ASR project can apply before trusting its own reported improvement; and (ii) the efficiency benchmark's honestly-reported negative latency result, as a reminder that deployment optimisations need re-measurement on target hardware rather than being assumed from general expectation.
+
+**Future work.** Three concrete extensions follow directly from the limitations in Section 5: extend the fine-tuning corpus beyond 15 hours and 160 speakers to close more of the remaining out-of-domain gap; replace the F0-pitch gender pseudo-label with verified demographic metadata if a real fairness/bias analysis is required; and evaluate on conversational or code-switched Nepali speech, since all data used here is read speech only.
 
 ## References
 
@@ -225,10 +236,13 @@ This project set out to answer whether a specific published Nepali ASR benchmark
 
 ## Appendices (not counted in word limit)
 
+**Abstract (reproduced for appendix-only reference):** Nepali automatic speech recognition (ASR) benchmarks are frequently measured on narrow, low-diversity corpora and then cited as evidence of general-purpose transcription quality. This project audits one such claim: `gagan3012/wav2vec2-xlsr-nepali`, a published Hugging Face XLS-R (wav2vec2) checkpoint that self-reports 5.97% word error rate (WER) on OpenSLR-43, its own single-speaker training corpus. Task 1 reproduces that figure in-domain (4.91% WER, confirming the claim) and measures the same checkpoint zero-shot on a different, multi-speaker corpus, OpenSLR-54 (62.30% WER) — a more than twelve-fold degradation. Task 2 fine-tunes the same checkpoint on a 15-hour, 160-speaker, speaker-disjoint OpenSLR-54 subset to repair that gap: out-of-domain WER falls to 38.17%, a 39% relative reduction. A matched-budget speaker-leakage ablation confirms this improvement is genuine, not an artefact of evaluation leakage. The fine-tuned model is also benchmarked for deployment efficiency, with a mixed, honestly-reported result. See the full Abstract on page 3 for complete details.
+
 - **Appendix A:** Project proposal, reproduced verbatim
-- **Appendix B:** Full code (all of `src/*.py`, `scripts/*.py`), external-source adaptations cited in module docstrings
+- **Appendix B:** Full code (all of `src/*.py`, `scripts/*.py`), external-source adaptations cited in module docstrings; B.0 highlights the core architecture code and diagram specifically
 - **Appendix C:** Screenshots of every experiment run (MLflow UI, environment/device info) showing device and software used
 - **Appendix D:** Extended results tables (full per-utterance WER/CER, complete error-category listing)
+- **Appendix E:** Project links (GitHub repository, YouTube presentation) and data source links
 
 ```{=openxml}
 <w:p><w:r><w:br w:type="page"/></w:r></w:p>
@@ -323,6 +337,34 @@ verifiable throughout rather than only at submission.
 # Appendix B — Full Code Listing
 
 All source code for this project, in full. External-source adaptations are cited in each module's docstring where applicable (the Hugging Face wav2vec2 fine-tuning blog for the CTC training loop and data collator).
+
+## B.0 Core Architecture
+
+The figure below (reproduced from Section 3.2) shows the model's internal layers and which are frozen vs. fine-tuned. The code snippet immediately following it, from `src/xlsr_training.py`, is where that architecture decision is actually implemented: the CNN feature encoder is loaded from the audited checkpoint and explicitly frozen (`freeze_feature_encoder()`), leaving only the transformer encoder and CTC head trainable.
+
+![Figure 1 (reproduced). XLS-R (wav2vec2) architecture, showing the CNN feature encoder, transformer encoder, and CTC head, with frozen vs. fine-tuned components marked.](appendix_screenshots/figure1_architecture.png)
+
+The same architecture is shown below as a standard layered node-link diagram (input layer → multiple hidden layers → output layer), for a complementary, more traditional view alongside Figure 1's block diagram.
+
+![Figure 1b. Node-link view of the same XLS-R architecture: input layer (audio waveform), multiple hidden layers (CNN feature encoder + transformer encoder blocks), output layer (CTC character probabilities).](appendix_screenshots/figure_nodelink_architecture.png)
+
+```python
+def load_model_and_processor(
+    model_id: str = XLSR_MODEL_ID,
+) -> tuple[Wav2Vec2ForCTC, Wav2Vec2Processor]:
+    processor = Wav2Vec2Processor.from_pretrained(model_id)
+    # torch's scaled_dot_product_attention raises NotImplementedError on Apple
+    # MPS when dropout is active (i.e. in training mode); fall back to eager
+    # attention off-CUDA so local smoke tests run. CUDA (Colab T4) keeps SDPA.
+    attn = "sdpa" if torch.cuda.is_available() else "eager"
+    model = Wav2Vec2ForCTC.from_pretrained(model_id, attn_implementation=attn)
+    # Standard wav2vec2 fine-tuning practice: the convolutional feature
+    # encoder was trained on far more audio than we have -- freeze it.
+    model.freeze_feature_encoder()
+    return model, processor
+```
+
+The full `src/xlsr_training.py` module (including this function in context) is listed below alongside the rest of the codebase.
 
 ## `src/__init__.py`
 
@@ -2700,3 +2742,22 @@ Total rows: 150. Categories are heuristic (jiwer alignment + regex), not mutuall
 | 09608a650b | 056c7 | female | मुद्रा जनसङ्ख्या क्षेत्रफल | मुद्रजनसङ्ख्या क्षेत्रफल | 0.67 | 0.08 | oov_rare_vocabulary |
 | 3cf2fad57c | 8efbc | male | पुरस्कार पाउनुभएको थियो | पुरस्कार पाउनुभएको थियो | 0.00 | 0.00 | other |
 | 8d4a047584 | efa9c | male | विद्यालय बनेको हो | विद्यालय बौनेको हो | 0.33 | 0.06 | oov_rare_vocabulary |
+
+```{=openxml}
+<w:p><w:r><w:br w:type="page"/></w:r></w:p>
+```
+
+# Appendix E — Project Links and Data Sources
+
+**GitHub repository (code, MLflow logs, reports):** [github.com/Rbimochan/NSTT-Lite](https://github.com/Rbimochan/NSTT-Lite) (branch: `coursework-10phase`)
+
+**YouTube presentation:** [youtu.be/WNg52rptkoU](https://youtu.be/WNg52rptkoU)
+
+**Datasets used:**
+
+- **OpenSLR-43** (in-domain, single-speaker): [www.openslr.org/43/](https://www.openslr.org/43/) — mirrored on Hugging Face as `gauravparajuli/slr43`
+- **OpenSLR-54** (out-of-domain, multi-speaker, used for fine-tuning and evaluation): [www.openslr.org/54/](https://www.openslr.org/54/)
+
+**Audited model checkpoint:** [huggingface.co/gagan3012/wav2vec2-xlsr-nepali](https://huggingface.co/gagan3012/wav2vec2-xlsr-nepali)
+
+All four links above are also given in the main report's "Project Links" section (page 3), reproduced here for appendix-only reference.

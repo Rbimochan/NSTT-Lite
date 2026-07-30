@@ -88,6 +88,34 @@ verifiable throughout rather than only at submission.
 
 All source code for this project, in full. External-source adaptations are cited in each module's docstring where applicable (the Hugging Face wav2vec2 fine-tuning blog for the CTC training loop and data collator).
 
+## B.0 Core Architecture
+
+The figure below (reproduced from Section 3.2) shows the model's internal layers and which are frozen vs. fine-tuned. The code snippet immediately following it, from `src/xlsr_training.py`, is where that architecture decision is actually implemented: the CNN feature encoder is loaded from the audited checkpoint and explicitly frozen (`freeze_feature_encoder()`), leaving only the transformer encoder and CTC head trainable.
+
+![Figure 1 (reproduced). XLS-R (wav2vec2) architecture, showing the CNN feature encoder, transformer encoder, and CTC head, with frozen vs. fine-tuned components marked.](appendix_screenshots/figure1_architecture.png)
+
+The same architecture is shown below as a standard layered node-link diagram (input layer → multiple hidden layers → output layer), for a complementary, more traditional view alongside Figure 1's block diagram.
+
+![Figure 1b. Node-link view of the same XLS-R architecture: input layer (audio waveform), multiple hidden layers (CNN feature encoder + transformer encoder blocks), output layer (CTC character probabilities).](appendix_screenshots/figure_nodelink_architecture.png)
+
+```python
+def load_model_and_processor(
+    model_id: str = XLSR_MODEL_ID,
+) -> tuple[Wav2Vec2ForCTC, Wav2Vec2Processor]:
+    processor = Wav2Vec2Processor.from_pretrained(model_id)
+    # torch's scaled_dot_product_attention raises NotImplementedError on Apple
+    # MPS when dropout is active (i.e. in training mode); fall back to eager
+    # attention off-CUDA so local smoke tests run. CUDA (Colab T4) keeps SDPA.
+    attn = "sdpa" if torch.cuda.is_available() else "eager"
+    model = Wav2Vec2ForCTC.from_pretrained(model_id, attn_implementation=attn)
+    # Standard wav2vec2 fine-tuning practice: the convolutional feature
+    # encoder was trained on far more audio than we have -- freeze it.
+    model.freeze_feature_encoder()
+    return model, processor
+```
+
+The full `src/xlsr_training.py` module (including this function in context) is listed below alongside the rest of the codebase.
+
 ## `src/__init__.py`
 
 ```python
@@ -2464,3 +2492,22 @@ Total rows: 150. Categories are heuristic (jiwer alignment + regex), not mutuall
 | 09608a650b | 056c7 | female | मुद्रा जनसङ्ख्या क्षेत्रफल | मुद्रजनसङ्ख्या क्षेत्रफल | 0.67 | 0.08 | oov_rare_vocabulary |
 | 3cf2fad57c | 8efbc | male | पुरस्कार पाउनुभएको थियो | पुरस्कार पाउनुभएको थियो | 0.00 | 0.00 | other |
 | 8d4a047584 | efa9c | male | विद्यालय बनेको हो | विद्यालय बौनेको हो | 0.33 | 0.06 | oov_rare_vocabulary |
+
+```{=openxml}
+<w:p><w:r><w:br w:type="page"/></w:r></w:p>
+```
+
+# Appendix E — Project Links and Data Sources
+
+**GitHub repository (code, MLflow logs, reports):** [github.com/Rbimochan/NSTT-Lite](https://github.com/Rbimochan/NSTT-Lite) (branch: `coursework-10phase`)
+
+**YouTube presentation:** [youtu.be/WNg52rptkoU](https://youtu.be/WNg52rptkoU)
+
+**Datasets used:**
+
+- **OpenSLR-43** (in-domain, single-speaker): [www.openslr.org/43/](https://www.openslr.org/43/) — mirrored on Hugging Face as `gauravparajuli/slr43`
+- **OpenSLR-54** (out-of-domain, multi-speaker, used for fine-tuning and evaluation): [www.openslr.org/54/](https://www.openslr.org/54/)
+
+**Audited model checkpoint:** [huggingface.co/gagan3012/wav2vec2-xlsr-nepali](https://huggingface.co/gagan3012/wav2vec2-xlsr-nepali)
+
+All four links above are also given in the main report's "Project Links" section (page 3), reproduced here for appendix-only reference.
