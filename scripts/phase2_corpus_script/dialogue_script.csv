@@ -1,0 +1,56 @@
+line_id,gender,speaker_role,transcript,terms,term_position,audio_path,recording_status
+p2_f01,female,doctor,"Hypertension को history कति समयदेखि छ तपाईंलाई?",hypertension,start,,pending
+p2_f02,female,patient,"मलाई बिहानैदेखि dizziness भइरहेको छ।",dizziness,mid,,pending
+p2_f03,female,doctor,"तपाईंको pulse अलि छिटो चलिरहेको छ, आराम गर्नुहोस्।",pulse,mid,,pending
+p2_f04,female,patient,"डाक्टर, मलाई राति vomiting भयो।",vomiting,end,,pending
+p2_f05,female,doctor,"यो diagnosis अनुसार तपाईंलाई gastritis हुन सक्छ।",diagnosis,gastritis,mid,,pending
+p2_f06,female,doctor,"Treatment सुरु गर्नुअघि थप एउटा test गरौं।",treatment,test,start,,pending
+p2_f07,female,patient,"मेरो खुट्टामा धेरै swelling देखिन्छ।",swelling,end,,pending
+p2_f08,female,doctor,"तपाईंको oxygen saturation ९४ मात्र छ, फिकर नगर्नुहोस्।",oxygen saturation,mid,,pending
+p2_f09,female,doctor,"Prescription मा तीनवटा medicine लेखिदिन्छु।",prescription,medicine,start,,pending
+p2_f10,female,patient,"अस्पतालबाट discharge कहिले हुन्छ मलाई?",discharge,mid,,pending
+p2_f11,female,doctor,"तपाईंलाई specialist कहाँ refer गर्नुपर्ने देखिन्छ।",specialist,mid,,pending
+p2_f12,female,doctor,"यो emergency जस्तो देखिन्छ, अहिले नै ICU लैजानुपर्छ।",emergency,icu,mid,,pending
+p2_f13,female,patient,"मेरो अर्को appointment कहिले राख्ने हो?",appointment,mid,,pending
+p2_f14,female,doctor,"Follow-up को लागि अर्को हप्ता आउनुहोस्।",follow-up,start,,pending
+p2_f15,female,doctor,"तपाईंको creatinine level अलि बढी देखियो।",creatinine,mid,,pending
+p2_f16,female,doctor,"Urine test र stool test दुवै गराउनुपर्छ।",urine test,stool test,start,,pending
+p2_f17,female,doctor,"पेटको समस्याको लागि endoscopy गर्नुपर्ने हुन सक्छ।",endoscopy,mid,,pending
+p2_f18,female,doctor,"Biopsy को रिपोर्ट अर्को हप्ता आउनेछ।",biopsy,start,,pending
+p2_f19,female,patient,"मलाई अचेल धेरै fatigue महसुस हुन्छ।",fatigue,end,,pending
+p2_f20,female,doctor,"CT scan गरेपछि मात्र यकिन हुन्छ।",ct scan,start,,pending
+p2_f21,female,doctor,"तपाईंको hba1c ८.५ आएको छ, यो अलि उच्च हो।",hba1c,mid,,pending
+p2_f22,female,doctor,"दिनको एक iron tablet खानुहोस् खाना खाएपछि।",iron tablet,mid,,pending
+p2_f23,female,doctor,"Symptoms हेर्दा यो साधारण cold जस्तो लाग्छ।",symptoms,cold,start,,pending
+p2_f24,female,doctor,"Surgery आवश्यक छैन, medicine ले नै ठिक हुन्छ।",surgery,medicine,start,,pending
+p2_f25,female,doctor,"Dosage दिनको दुई पटक, खानापछि लिनुहोस्।",dosage,start,,pending
+p2_m01,male,patient,"मेरो छातीमा pain छ र सास फेर्न गाह्रो छ।",pain,mid,,pending
+p2_m02,male,doctor,"तपाईंलाई pneumonia भएको हुन सक्छ, x-ray गरौं।",pneumonia,x-ray,mid,,pending
+p2_m03,male,doctor,"Jaundice को लक्षण देखिएको छ, blood test गरौं।",jaundice,blood test,start,,pending
+p2_m04,male,patient,"डाक्टर, मलाई ulcer भएको जस्तो लाग्छ।",ulcer,end,,pending
+p2_m05,male,doctor,"तपाईंको temperature १०२ डिग्री छ, यो fever हो।",temperature,fever,mid,,pending
+p2_m06,male,doctor,"Cancer को शंका छैन, तर थप जाँच गरौं।",cancer,start,,pending
+p2_m07,male,doctor,"यो tumor सानो छ, अपरेसन नगरी medicine ले नियन्त्रण गर्न सकिन्छ।",tumor,medicine,start,,pending
+p2_m08,male,doctor,"Chemotherapy सुरु गर्नुअघि counselling गरौं।",chemotherapy,start,,pending
+p2_m09,male,doctor,"मृगौलाको समस्याको लागि dialysis आवश्यक पर्न सक्छ।",dialysis,end,,pending
+p2_m10,male,patient,"मलाई operation गर्नुपर्ने हो कि medicine ले नै ठिक हुन्छ?",operation,medicine,mid,,pending
+p2_m11,male,doctor,"तपाईंको referral letter तयार पारिदिन्छु specialist को लागि।",referral,specialist,mid,,pending
+p2_m12,male,doctor,"Checkup को नतिजा सबै normal देखियो।",checkup,normal,start,,pending
+p2_m13,male,patient,"मलाई घुँडामा swelling र pain दुवै छ।",swelling,pain,mid,,pending
+p2_m14,male,doctor,"तपाईंको blood pressure नियन्त्रणमा छैन, dosage बढाउनुपर्छ।",blood pressure,dosage,mid,,pending
+p2_m15,male,doctor,"Stroke को जोखिम कम गर्न यो medicine नियमित खानुहोस्।",stroke,medicine,start,,pending
+p2_m16,male,doctor,"तपाईंको ECG मा कुनै issue देखिएन, चिन्ता नलिनुहोस्।",ecg,issue,mid,,pending
+p2_m17,male,patient,"मेरो दायाँ हातमा injection दिनुभयो भने हुन्छ।",injection,mid,,pending
+p2_m18,male,doctor,"Vaccine को दोस्रो dose अर्को महिना लिनुहोस्।",vaccine,dose,start,,pending
+p2_m19,male,doctor,"तपाईंको cholesterol level सामान्यभन्दा अलि बढी छ।",cholesterol,mid,,pending
+p2_m20,male,doctor,"Migraine को लागि यो painkiller दिनमा एक पटक मात्र खानुहोस्।",migraine,painkiller,start,,pending
+p2_m21,male,patient,"डाक्टर, मलाई asthma को inhaler सकिन लागेको छ।",asthma,inhaler,end,,pending
+p2_m22,male,doctor,"तपाईंको thyroid TSH level सामान्य दायरामा छ।",thyroid,tsh,mid,,pending
+p2_m23,male,doctor,"Kidney stone को size सानो छ, ultrasound ले पुष्टि गरौं।",kidney stone,ultrasound,start,,pending
+p2_m24,male,doctor,"Fracture भएको ठाउँमा MRI गरेर हेरौं।",fracture,mri,start,,pending
+p2_m25,male,doctor,"तपाईंको hemoglobin र platelet count दुवै low छ।",hemoglobin,platelet,mid,,pending
+p2_m26,male,doctor,"Dengue को test positive आएको छ, आराम गर्नुहोस्।",dengue,test,start,,pending
+p2_m27,male,patient,"मलाई cough र cold दुवै भएको तीन दिन भयो।",cough,cold,mid,,pending
+p2_m28,male,doctor,"तपाईंको arthritis को course सकिनेवाला छ।",arthritis,course,mid,,pending
+p2_m29,male,doctor,"Anemia को कारण tiredness भइरहेको हुन सक्छ।",anemia,mid,,pending
+p2_m30,male,doctor,"Diabetes नियन्त्रणमा छ, blood sugar अर्को महिना फेरि जाँचौं।",diabetes,blood sugar,start,,pending

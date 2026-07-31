@@ -1,0 +1,87 @@
+term,category,in_pilot_set
+diabetes,disease,yes
+anemia,disease,yes
+arthritis,disease,yes
+asthma,disease,yes
+dengue,disease,yes
+migraine,disease,yes
+thyroid,disease,yes
+pregnancy,disease,yes
+fracture,disease,yes
+kidney stone,disease,yes
+hypertension,disease,no
+stroke,disease,no
+cancer,disease,no
+tumor,disease,no
+pneumonia,disease,no
+jaundice,disease,no
+gastritis,disease,no
+ulcer,disease,no
+pain,symptom,yes
+nausea,symptom,yes
+fever,symptom,yes
+cough,symptom,yes
+chest tightness,symptom,yes
+tension,symptom,yes
+cold,symptom,yes
+chest pain,symptom,yes
+dizziness,symptom,no
+vomiting,symptom,no
+fatigue,symptom,no
+swelling,symptom,no
+weight,vital,yes
+height,vital,yes
+blood pressure,vital,yes
+pulse,vital,no
+temperature,vital,no
+oxygen saturation,vital,no
+hemoglobin,lab_value,yes
+cholesterol,lab_value,yes
+blood sugar,lab_value,yes
+platelet,lab_value,yes
+tsh,lab_value,yes
+ecg,lab_value,yes
+mri,imaging,yes
+x-ray,imaging,yes
+ultrasound,imaging,yes
+scan,imaging,yes
+ct scan,imaging,no
+hba1c,lab_value,no
+creatinine,lab_value,no
+urine test,lab_value,no
+stool test,lab_value,no
+endoscopy,procedure,no
+biopsy,procedure,no
+medicine,medication,yes
+antibiotic,medication,yes
+painkiller,medication,yes
+syrup,medication,yes
+injection,medication,yes
+vaccine,medication,yes
+inhaler,medication,yes
+dose,medication,yes
+course,medication,yes
+dosage,medication,no
+prescription,medication,no
+vitamin,medication,no
+iron tablet,medication,no
+test,admin,yes
+report,admin,yes
+check,admin,yes
+history,admin,yes
+recovery,admin,yes
+diagnosis,admin,no
+treatment,admin,no
+surgery,procedure,no
+operation,procedure,no
+follow-up,admin,no
+appointment,admin,no
+discharge,admin,no
+referral,admin,no
+specialist,admin,no
+emergency,admin,no
+icu,admin,no
+checkup,admin,no
+symptoms,admin,no
+chemotherapy,procedure,no
+dialysis,procedure,no
