@@ -1,0 +1,23 @@
+{
+  "created_at": "20260731T073707Z",
+  "device": {
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+    "torch": "2.13.0",
+    "cuda_available": false,
+    "mps_available": true
+  },
+  "smoke_test": true,
+  "manifest_dir": "/Users/bimochankunwar/Desktop/Swastha/Model/nepali-medical-asr/data/manifests_medical_combined",
+  "train_loss": 2.7374595006306968,
+  "eval_metrics": {
+    "eval_loss": 2.0123181343078613,
+    "eval_wer": 0.8947368421052632,
+    "eval_cer": 0.5492063492063493,
+    "eval_runtime": 1.383,
+    "eval_samples_per_second": 5.785,
+    "eval_steps_per_second": 2.892,
+    "epoch": 1.5
+  },
+  "checkpoint_dir": "/Users/bimochankunwar/Desktop/Swastha/Model/nepali-medical-asr/models/xlsr-medical-ft-smoke",
+  "global_step": 6
+}

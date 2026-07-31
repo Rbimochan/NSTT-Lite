@@ -208,9 +208,10 @@ def create_trainer(
     manifest_dir: Path | None = None,
     max_train: int | None = None,
     max_eval: int | None = None,
+    model_id: str = XLSR_MODEL_ID,
 ) -> tuple[Trainer, Wav2Vec2Processor]:
     set_seed(seed)
-    model, processor = load_model_and_processor()
+    model, processor = load_model_and_processor(model_id)
 
     if smoke_test and max_train is None:
         max_train, max_eval = 32, 8
@@ -248,6 +249,7 @@ def train_and_save(
     manifest_dir: Path | None = None,
     max_train: int | None = None,
     max_eval: int | None = None,
+    model_id: str = XLSR_MODEL_ID,
 ) -> dict:
     trainer, processor = create_trainer(
         project_root,
@@ -257,6 +259,7 @@ def train_and_save(
         manifest_dir=manifest_dir,
         max_train=max_train,
         max_eval=max_eval,
+        model_id=model_id,
     )
     train_result = trainer.train(resume_from_checkpoint=resume_from_checkpoint)
     eval_metrics = trainer.evaluate()
