@@ -30,5 +30,8 @@ drive.mount("/content/drive")
 ```
 
 ## Status
-See `.duo/project-state.json` for live task status (T-001 … T-010, mapped 1:1 to
-Plan 1 … Plan 10).
+Currently at Plan 1 of 10 (environment + data acquisition) — fine-tuning and
+evaluation haven't run yet, so no WER/accuracy numbers exist yet. See
+`.duo/project-state.json` for live task status (T-001 … T-010, mapped 1:1 to
+Plan 1 … Plan 10); results will be added here once Plan 3 (baseline evaluation)
+and later fine-tuning runs complete.
