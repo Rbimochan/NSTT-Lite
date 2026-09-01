@@ -1,0 +1,185 @@
+{
+  "checkpoint": "/Users/bimochankunwar/Desktop/NSTT-Lite/models/xlsr-ft",
+  "num_utterances": 150,
+  "overall_wer": 0.38173302107728335,
+  "overall_cer": 0.09886071297317163,
+  "error_category_counts": {
+    "other": 59,
+    "oov_rare_vocabulary": 90,
+    "phonetic_confusion": 64,
+    "noise_degradation": 22
+  },
+  "error_category_note": "Heuristic, regex/jiwer-alignment-based tagging -- categories can overlap per utterance and are not mutually exclusive.",
+  "gender_pseudo_label_breakdown": {
+    "male": {
+      "wer": 0.37668161434977576,
+      "cer": 0.10310734463276836,
+      "num_utterances": 77
+    },
+    "female": {
+      "wer": 0.3872549019607843,
+      "cer": 0.09425287356321839,
+      "num_utterances": 73
+    }
+  },
+  "gender_pseudo_label_note": "gender_pseudo_label is an F0-pitch threshold heuristic (165Hz), NOT verified ground truth -- this breakdown measures WER by acoustic pitch-threshold group, not by true gender.",
+  "speaker_wer_spread": {
+    "min": [
+      "76dab",
+      {
+        "mean_wer": 0.125,
+        "n": 12
+      }
+    ],
+    "max": [
+      "70e10",
+      {
+        "mean_wer": 0.6363636363636364,
+        "n": 11
+      }
+    ],
+    "num_speakers": 16
+  },
+  "worst_10_examples": [
+    {
+      "utterance_id": "8c693c9a97",
+      "speaker_id": "7f9c6",
+      "gender_pseudo_label": "female",
+      "reference": "मान्छे चटकारे",
+      "hypothesis": "मान्छि चट कार्य",
+      "wer": 1.5,
+      "cer": 0.3076923076923077,
+      "categories": [
+        "noise_degradation",
+        "oov_rare_vocabulary",
+        "phonetic_confusion"
+      ]
+    },
+    {
+      "utterance_id": "d443c84109",
+      "speaker_id": "70e10",
+      "gender_pseudo_label": "female",
+      "reference": "क्रान्तिकारी वाममोर्चाको",
+      "hypothesis": "तन्थिकारी बाम वर्षको",
+      "wer": 1.5,
+      "cer": 0.4166666666666667,
+      "categories": [
+        "noise_degradation",
+        "oov_rare_vocabulary",
+        "phonetic_confusion"
+      ]
+    },
+    {
+      "utterance_id": "7da0e9a7b7",
+      "speaker_id": "99866",
+      "gender_pseudo_label": "female",
+      "reference": "राज्यमाथि हासिल गर्‍यो",
+      "hypothesis": "राज्यमाति हासेल गर‍यो",
+      "wer": 1.0,
+      "cer": 0.13636363636363635,
+      "categories": [
+        "noise_degradation",
+        "oov_rare_vocabulary",
+        "phonetic_confusion"
+      ]
+    },
+    {
+      "utterance_id": "8ccd499b56",
+      "speaker_id": "da0cf",
+      "gender_pseudo_label": "male",
+      "reference": "बनाउनबाट जोगाउँदछ",
+      "hypothesis": "बनाउनबाटा जोगआउँदछ",
+      "wer": 1.0,
+      "cer": 0.11764705882352941,
+      "categories": [
+        "noise_degradation",
+        "oov_rare_vocabulary",
+        "phonetic_confusion"
+      ]
+    },
+    {
+      "utterance_id": "0cf3ebaf89",
+      "speaker_id": "07179",
+      "gender_pseudo_label": "female",
+      "reference": "उद्देश्यले ५ अप्रिल",
+      "hypothesis": "उद्येश्यले पच अपरेल",
+      "wer": 1.0,
+      "cer": 0.2631578947368421,
+      "categories": [
+        "noise_degradation",
+        "oov_rare_vocabulary",
+        "phonetic_confusion"
+      ]
+    },
+    {
+      "utterance_id": "3cd1567940",
+      "speaker_id": "e8f6f",
+      "gender_pseudo_label": "male",
+      "reference": "ब्याज तिर्नुपर्ने हुन्छ",
+      "hypothesis": "व्यहास दिन्नु पर्ने हुन्छ",
+      "wer": 1.0,
+      "cer": 0.2608695652173913,
+      "categories": [
+        "noise_degradation",
+        "oov_rare_vocabulary",
+        "phonetic_confusion"
+      ]
+    },
+    {
+      "utterance_id": "0950a3e9a4",
+      "speaker_id": "99866",
+      "gender_pseudo_label": "female",
+      "reference": "रन्मामैकोट तकसेरा हुकाम",
+      "hypothesis": "रणमा मैकोट तक्सेरा हुकाम",
+      "wer": 1.0,
+      "cer": 0.17391304347826086,
+      "categories": [
+        "noise_degradation",
+        "oov_rare_vocabulary",
+        "phonetic_confusion"
+      ]
+    },
+    {
+      "utterance_id": "7b1f434978",
+      "speaker_id": "99866",
+      "gender_pseudo_label": "female",
+      "reference": "आइल्यान्ड तथा बेलायतदेखि",
+      "hypothesis": "आइल्यान् तथा बेलाय देखि",
+      "wer": 1.0,
+      "cer": 0.08333333333333333,
+      "categories": [
+        "noise_degradation",
+        "oov_rare_vocabulary",
+        "phonetic_confusion"
+      ]
+    },
+    {
+      "utterance_id": "34760118f4",
+      "speaker_id": "9d08c",
+      "gender_pseudo_label": "male",
+      "reference": "वृक्ष यही हो",
+      "hypothesis": "बृच्ष यहियो",
+      "wer": 1.0,
+      "cer": 0.4166666666666667,
+      "categories": [
+        "noise_degradation",
+        "oov_rare_vocabulary",
+        "phonetic_confusion"
+      ]
+    },
+    {
+      "utterance_id": "dde677080a",
+      "speaker_id": "70e10",
+      "gender_pseudo_label": "female",
+      "reference": "सूर्यले पृथ्वीको वरिपरि",
+      "hypothesis": "सवर्यलले फृथ्ष गरीपुरि",
+      "wer": 1.0,
+      "cer": 0.43478260869565216,
+      "categories": [
+        "noise_degradation",
+        "oov_rare_vocabulary",
+        "phonetic_confusion"
+      ]
+    }
+  ]
+}

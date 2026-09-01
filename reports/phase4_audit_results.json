@@ -1,0 +1,25 @@
+{
+  "model": "gagan3012/wav2vec2-xlsr-nepali",
+  "self_reported_wer": 0.0597,
+  "device": {
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+    "python": "3.13.13",
+    "torch": "2.13.0",
+    "cuda_available": false,
+    "mps_available": true
+  },
+  "in_domain_openslr43": {
+    "dataset": "OpenSLR-43 (in-domain)",
+    "num_utterances": 150,
+    "wer": 0.04913494809688582,
+    "cer": 0.008724212254952273
+  },
+  "out_of_domain_openslr54": {
+    "dataset": "OpenSLR-54 speaker-disjoint test (out-of-domain)",
+    "num_utterances": 150,
+    "wer": 0.6229508196721312,
+    "cer": 0.17383314957736126
+  },
+  "corpus_separation_note": "OpenSLR-43 and OpenSLR-54 results are never merged into a single number.",
+  "slr54_gender_note": "SLR54 rows carry an F0-pitch gender pseudo-label (165Hz threshold), not verified metadata -- used only for Phase 9 per-group analysis."
+}

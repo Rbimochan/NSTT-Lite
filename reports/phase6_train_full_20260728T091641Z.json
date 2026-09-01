@@ -1,0 +1,23 @@
+{
+  "created_at": "20260728T091641Z",
+  "device": {
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.11.15",
+    "torch": "2.13.0",
+    "cuda_available": false,
+    "cuda_device": null
+  },
+  "smoke_test": false,
+  "train_loss": 0.5016484800030296,
+  "eval_metrics": {
+    "eval_loss": 0.5093634128570557,
+    "eval_wer": 0.6882859033752482,
+    "eval_cer": 0.19914699264533028,
+    "eval_runtime": 165.8013,
+    "eval_samples_per_second": 9.077,
+    "eval_steps_per_second": 4.542,
+    "epoch": 5.0
+  },
+  "checkpoint_dir": "models/xlsr-ft",
+  "global_step": 7575
+}

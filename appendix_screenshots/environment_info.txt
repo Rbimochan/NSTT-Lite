@@ -1,0 +1,9 @@
+=== Environment Info ===
+Platform: macOS-26.5.2-arm64-arm-64bit
+Python: 3.11.15 | packaged by conda-forge | (main, Jun 11 2026, 03:29:05) [Clang 19.1.7 ]
+torch: 2.13.0
+CUDA available: False
+MPS available: True
+transformers: 4.49.0
+datasets: 3.2.0
+mlflow: 2.20.1

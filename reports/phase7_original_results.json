@@ -1,0 +1,16 @@
+{
+  "checkpoint": "gagan3012/wav2vec2-xlsr-nepali",
+  "tag": "original",
+  "in_domain_openslr43": {
+    "dataset": "OpenSLR-43 (in-domain)",
+    "num_utterances": 150,
+    "wer": 0.04913494809688582,
+    "cer": 0.008724212254952273
+  },
+  "out_of_domain_openslr54": {
+    "dataset": "OpenSLR-54 speaker-disjoint test (out-of-domain)",
+    "num_utterances": 150,
+    "wer": 0.6229508196721312,
+    "cer": 0.17383314957736126
+  }
+}

@@ -13,6 +13,12 @@ TARGET_SAMPLE_RATE = 16_000
 MIN_DURATION_S = 0.5
 MAX_DURATION_S = 30.0
 
+# Mean-F0 threshold separating male/female speech in the standard adult voice
+# pitch ranges (~85-180Hz male, ~165-255Hz female); midpoint is the common
+# heuristic cutoff. OpenSLR54 ships no gender metadata, so this acoustic proxy
+# is used as a pseudo-label, not ground truth -- must be reported as such.
+GENDER_PITCH_THRESHOLD_HZ = 165.0
+
 
 def normalize_transcript_nfc(text: str) -> str:
     """NFC-normalize Devanagari transcripts to avoid encoding mismatches."""
@@ -44,6 +50,30 @@ def process_audio_file(
     output_path.parent.mkdir(parents=True, exist_ok=True)
     sf.write(output_path, waveform, target_sr)
     return duration_s
+
+
+def estimate_mean_f0_hz(waveform: np.ndarray, sr: int) -> float | None:
+    """Estimate mean voiced fundamental frequency (F0) in Hz via librosa pYIN.
+
+    Returns None if no voiced frames are detected (e.g. silence/noise).
+    """
+    f0, voiced_flag, _ = librosa.pyin(
+        waveform,
+        fmin=librosa.note_to_hz("C2"),
+        fmax=librosa.note_to_hz("C6"),
+        sr=sr,
+    )
+    voiced_f0 = f0[voiced_flag]
+    if voiced_f0.size == 0:
+        return None
+    return float(np.nanmean(voiced_f0))
+
+
+def classify_gender_from_pitch(mean_f0_hz: float | None) -> str:
+    """Acoustic pseudo-label: 'male'/'female' by mean-F0 threshold, 'unknown' if undetected."""
+    if mean_f0_hz is None or np.isnan(mean_f0_hz):
+        return "unknown"
+    return "female" if mean_f0_hz >= GENDER_PITCH_THRESHOLD_HZ else "male"
 
 
 def process_utterance(

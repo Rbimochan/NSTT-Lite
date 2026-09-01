@@ -1,0 +1,23 @@
+{
+  "created_at": "20260726T055255Z",
+  "device": {
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+    "python": "3.13.13",
+    "torch": "2.13.0",
+    "cuda_available": false,
+    "cuda_device": null
+  },
+  "smoke_test": true,
+  "train_loss": 2.7183701594670615,
+  "eval_metrics": {
+    "eval_loss": 1.8227039575576782,
+    "eval_wer": 0.68,
+    "eval_cer": 0.26,
+    "eval_runtime": 0.8093,
+    "eval_samples_per_second": 9.885,
+    "eval_steps_per_second": 4.942,
+    "epoch": 1.5
+  },
+  "checkpoint_dir": "/Users/bimochankunwar/Desktop/NSTT-Lite/models/xlsr-ft-smoke",
+  "global_step": 6
+}

@@ -1,0 +1,16 @@
+{
+  "checkpoint": "models/xlsr-ft",
+  "tag": "finetuned",
+  "in_domain_openslr43": {
+    "dataset": "OpenSLR-43 (in-domain)",
+    "num_utterances": 150,
+    "wer": 0.16401384083044981,
+    "cer": 0.029764959458072462
+  },
+  "out_of_domain_openslr54": {
+    "dataset": "OpenSLR-54 speaker-disjoint test (out-of-domain)",
+    "num_utterances": 150,
+    "wer": 0.38173302107728335,
+    "cer": 0.09886071297317163
+  }
+}
